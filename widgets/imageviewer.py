@@ -1,3 +1,5 @@
+from os.path import join
+
 from PySide6.QtCore import QDir
 from PySide6.QtGui import QImageReader, QGuiApplication, QPixmap
 from PySide6.QtWidgets import QLabel, QMessageBox
@@ -31,4 +33,4 @@ class ImageViewer(QLabel):
 
     @staticmethod
     def _convert_city_to_imagename(current_city):
-        return f'images/{current_city}.png'
+        return join('images', f'{current_city}.png')
