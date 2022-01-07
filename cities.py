@@ -1,5 +1,5 @@
 CITIES = [
-    ("Oreburgh", "oreburgh"),
-    ("Veilstone", "veilstone"),
-    ("Fight/Resort", "fight_resort"),
+    ("oreburgh", "Oreburgh"),
+    ("veilstone", "Veilstone"),
+    ("fight_resort", "Fight/Resort"),
 ]
