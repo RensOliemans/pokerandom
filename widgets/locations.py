@@ -1,13 +1,13 @@
 from PySide6.QtWidgets import QGroupBox, QPushButton, QVBoxLayout
 
 
-class CityList(QGroupBox):
-    def __init__(self, cities, set_city_callback):
+class Locations(QGroupBox):
+    def __init__(self, locations, set_location_callback):
         super().__init__("Cities")
 
         self.buttons = QVBoxLayout(self)
-        self.set_city_callback = set_city_callback
-        [self._add_city(key, name) for key, name in cities]
+        self.set_location_callback = set_location_callback
+        [self._add_city(key, name) for key, name in locations]
 
     def _add_city(self, key, name):
         button = self._create_button(key, name)
@@ -15,9 +15,9 @@ class CityList(QGroupBox):
 
     def _create_button(self, key, name):
         button = QPushButton(name)
-        button.clicked.connect(lambda: self._set_city(key))
+        button.clicked.connect(lambda: self._set_location(key))
         return button
 
-    def _set_city(self, city):
-        self.set_city_callback(city)
+    def _set_location(self, location):
+        self.set_location_callback(location)
 

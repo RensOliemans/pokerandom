@@ -1,3 +1,3 @@
 from widgets.notes import Notes
-from widgets.citylist import CityList
+from widgets.locations import Locations
 from widgets.imageviewer import ImageViewer
