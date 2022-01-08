@@ -9,10 +9,10 @@ class PokeRandom(QWidget):
         self.setWindowTitle("Pokémon Platinum Randomizer Tracker")
 
         self.current_location = initial_location
-        self.locations = widgets.Locations(locations, self.set_current_location)
+        self.locations = widgets.Locations(locations, self.change_current_location)
         self.notes = widgets.Notes()
 
-        self.image = widgets.ImageViewer(self.current_location)
+        self.image = widgets.ImageViewer(self.current_location[0])
 
         self.left = QVBoxLayout()
         self.left.addWidget(self.locations)
@@ -25,7 +25,7 @@ class PokeRandom(QWidget):
     def setVisible(self, visible):
         super(PokeRandom, self).setVisible(visible)
 
-    def set_current_location(self, location):
+    def change_current_location(self, location):
         self.current_location = location
         self.image.set_image(location)
 

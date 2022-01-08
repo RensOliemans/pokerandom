@@ -11,6 +11,6 @@ if __name__ == '__main__':
     QCoreApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication()
-    gallery = PokeRandom(locations=PLATINUM, initial_location=PLATINUM['cities'][0])
+    gallery = PokeRandom(locations=PLATINUM, initial_location=PLATINUM['cities'][1])
     gallery.show()
     sys.exit(app.exec())
