@@ -9,6 +9,14 @@ post explaining how it works (for Emerald).
 Written in Python, using [PySide6](https://doc.qt.io/qtforpython) (Qt 6). I
 hope that this will work on Windows out of the box, but cannot guarantee that.
 
+
+## Getting started
+Create a `virtualenv`, and do
+
+    pip install pyside6
+    mv data/links.sqlite.empty data/links.sqlite
+    python main.py
+
 ## Roadmap:
 
 I *just* started on this project, it does not work yet.
