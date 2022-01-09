@@ -1,9 +1,8 @@
 class Link:
-    def __init__(self, entrance, destination=None, one_way=False):
+    def __init__(self, entrance, destination=None):
         assert entrance is not None, 'Entrance cannot be None'
         self.entrance = entrance
         self.destination = destination
-        self.one_way = one_way
 
     @property
     def dead_end(self):
@@ -15,14 +14,13 @@ class Link:
     def __eq__(self, other):
         return (isinstance(other, Link) and (
             self.entrance == other.entrance and
-            self.destination == other.destination and
-            self.one_way == other.one_way))
+            self.destination == other.destination))
 
     def __hash__(self):
-        return hash((self.entrance, self.destination, self.one_way))
+        return hash((self.entrance, self.destination))
 
     def __repr__(self):
         if self.dead_end:
             return f"<Link from {self.entrance} (dead-end)>"
         else:
-            return f"<Link from {self.entrance} to {self.destination}{' (one-way)' if self.one_way else ''}>"
+            return f"<Link from {self.entrance} to {self.destination}>"

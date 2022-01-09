@@ -11,8 +11,8 @@ class Status(QGroupBox):
 
         self.layout = QGridLayout(self)
 
-        self.layout.addWidget(QLabel('Entrance (E)'), 0, 0)
-        self.layout.addWidget(QLabel('Destination (D)'), 0, 1)
+        self.layout.addWidget(QLabel('Entrance'), 0, 0)
+        self.layout.addWidget(QLabel('Destination'), 0, 1)
 
         self.entrance_widget = QLabel('Select a location')
         self.destination_widget = QLabel('')
@@ -25,9 +25,6 @@ class Status(QGroupBox):
             self.entrance = key
         elif self.entrance == key:
             return
-        elif key == 'dead_end':
-            self.add_link_callback(self.entrance, 'dead_end')
-            self.entrance = None
         else:
             self.add_link_callback(self.entrance, key)
             self.entrance = None

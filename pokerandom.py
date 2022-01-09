@@ -9,14 +9,14 @@ class PokeRandom(QWidget):
     def __init__(self, locations, initial_location, entrances, db):
         super().__init__()
         self.setWindowTitle("Pokémon Platinum Randomizer Tracker")
-        self.link_manager = LinkManager(locations, entrances, db)
 
+        self.link_manager = LinkManager(locations, entrances, db)
         self.current_location = initial_location
         self.entrances = entrances
+
         self.locations = widgets.LocationGrid(locations, self.change_current_location, 15)
         self.connections = widgets.ConnectionGrid(self.entrances, self.select_connection, 10, self.current_location[0])
         self.status = widgets.Status(self.add_link, self.get_name_of_location)
-
         self.image = widgets.ImageViewer(self.current_location[0])
 
         self.left = QVBoxLayout()
@@ -41,7 +41,6 @@ class PokeRandom(QWidget):
 
     def add_link(self, entrance, destination):
         self.link_manager.add_link(Link(entrance, destination))
-        print(list(self.link_manager.get_links()))
 
     def get_name_of_location(self, key):
         all_entrances = [self.entrances[x] for x in self.entrances.keys()]

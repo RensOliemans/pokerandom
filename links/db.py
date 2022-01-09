@@ -8,12 +8,12 @@ class Db:
         self._database = database
 
     def insert(self, link: Link):
-        self._cursor.execute("INSERT INTO link VALUES (?, ?, ?)",
-                             (link.entrance, link.destination, link.one_way))
+        self._cursor.execute("INSERT INTO link VALUES (?, ?)",
+                             (link.entrance, link.destination))
 
     def get(self):
         self._cursor.execute("SELECT * FROM link")
-        return (Link(el[0], el[1], el[2]) for el in self._cursor.fetchall())
+        return (Link(el[0], el[1]) for el in self._cursor.fetchall())
 
     def get_from_entrance(self, key):
         self._cursor.execute("SELECT * FROM link WHERE entrance = (?) OR destination = (?)",
