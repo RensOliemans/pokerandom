@@ -66,3 +66,6 @@ class ConnectionGrid(ButtonGrid):
         elements = self.elements[location]
         for key, name in elements:
             yield self.create_button(key, name)
+
+    def add_link(self, entrance, destination):
+        pass

@@ -1,12 +1,15 @@
-from PySide6.QtWidgets import *
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout
 
 import widgets
+from links.link import Link
+from links.linkmanager import LinkManager
 
 
 class PokeRandom(QWidget):
-    def __init__(self, locations, initial_location, entrances):
+    def __init__(self, locations, initial_location, entrances, db):
         super().__init__()
         self.setWindowTitle("Pokémon Platinum Randomizer Tracker")
+        self.link_manager = LinkManager(locations, entrances, db)
 
         self.current_location = initial_location
         self.entrances = entrances
@@ -37,7 +40,8 @@ class PokeRandom(QWidget):
         self.status.select_item(location)
 
     def add_link(self, entrance, destination):
-        print(f'Added link between {entrance} and {destination}')
+        self.link_manager.add_link(Link(entrance, destination))
+        print(list(self.link_manager.get_links()))
 
     def get_name_of_location(self, key):
         all_entrances = [self.entrances[x] for x in self.entrances.keys()]
