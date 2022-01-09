@@ -6,16 +6,19 @@ from PySide6.QtWidgets import QLabel, QMessageBox
 
 
 class ImageViewer(QLabel):
-    def __init__(self, initial_city):
+    def __init__(self, initial_city, max_width=1000):
         super().__init__()
 
+        self.max_width = max_width
         self.set_image(initial_city)
 
     def set_image(self, cityname):
         filename = self._convert_city_to_imagename(cityname)
         image = self._load_image(filename)
         if image:
-            self.setPixmap(QPixmap.fromImage(image))
+            pixmap = QPixmap.fromImage(image)
+            pixmap = pixmap.scaledToWidth(self.max_width)
+            self.setPixmap(pixmap)
 
     def _load_image(self, filename):
         native_filename = QDir.toNativeSeparators(filename)
