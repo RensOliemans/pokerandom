@@ -1,6 +1,6 @@
 import unittest
 
-from widgets.locations import divide_widgets_per_column, create_grid
+from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
 
 
 class TestGridAllocation(unittest.TestCase):
@@ -57,6 +57,20 @@ class TestGridDivision(unittest.TestCase):
         c = 3
         expected = [3, 3, 2]
         self.assertEqual(expected, list(divide_widgets_per_column(n, c)))
+
+
+class TestGridCols(unittest.TestCase):
+    def test_whole(self):
+        n = 21
+        max_rows = 7
+        expected = 3
+        self.assertEqual(expected, compute_cols(n, max_rows))
+
+    def test_over(self):
+        n = 26
+        max_rows = 7
+        expected = 4
+        self.assertEqual(expected, compute_cols(n, max_rows))
 
 
 if __name__ == '__main__':

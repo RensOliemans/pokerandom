@@ -1,6 +1,7 @@
-import math
+from PySide6.QtWidgets import QGroupBox, QPushButton, QGridLayout, QLabel
 
-from PySide6.QtWidgets import QGroupBox, QPushButton, QVBoxLayout, QGridLayout, QLabel
+from util import gridutils
+from util.gridutils import divide_widgets_per_column, create_grid
 
 
 class Locations(QGroupBox):
@@ -11,8 +12,9 @@ class Locations(QGroupBox):
         self.buttons = QGridLayout(self)
         self.add_buttons(locations)
 
-    def add_buttons(self, locations, columns=3):
+    def add_buttons(self, locations, max_rows=15):
         widgets = list(self._create_widgets(locations))
+        columns = gridutils.compute_cols(len(widgets), max_rows)
 
         division = divide_widgets_per_column(len(widgets), columns)
         grid = create_grid(widgets, list(division))
@@ -37,22 +39,3 @@ class Locations(QGroupBox):
 
     def _set_location(self, location):
         self.change_location_callback(location)
-
-
-def divide_widgets_per_column(widgets, columns):
-    while widgets > 0:
-        widgets_per_column = math.ceil(widgets / columns)
-        yield widgets_per_column
-        widgets -= widgets_per_column
-        columns -= 1
-
-
-def create_grid(widgets, division):
-    column, row = 0, 0
-    while widgets:
-        widget = widgets.pop(0)
-        if row >= division[column]:
-            row = 0
-            column += 1
-        yield widget, (row, column)
-        row += 1
