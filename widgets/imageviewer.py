@@ -9,7 +9,7 @@ from errors import ImageNotFoundError
 
 
 class ImageViewer(QLabel):
-    def __init__(self, initial_location, max_width=1000, max_height=800):
+    def __init__(self, initial_location, max_width=1000, max_height=1000):
         super().__init__()
 
         self.max_width = max_width
