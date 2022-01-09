@@ -17,7 +17,7 @@ class PokeRandom(QWidget):
         self.locations = widgets.LocationGrid(locations, self.change_current_location, 15)
         self.connections = widgets.ConnectionGrid(self.entrances, self.select_connection, 10, self.current_location[0])
         self.status = widgets.Status(self.add_link, self.get_name_of_location)
-        self.image = widgets.ImageViewer(self.current_location[0])
+        self.image = widgets.ImageViewer(self.current_location[0], max_height=800, max_width=800)
 
         self.left = QVBoxLayout()
         self.left.addWidget(self.locations)
