@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from PySide6.QtWidgets import QGridLayout, QLabel, QPushButton, QGroupBox
+from PySide6.QtWidgets import QGridLayout, QLabel, QPushButton, QGroupBox, QWidget
 
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
 
@@ -14,10 +14,16 @@ class ButtonGrid(QGroupBox):
         self.max_rows = max_rows
 
         self.buttons = QGridLayout(self)
+        self.widgets = []
 
         self.add_buttons(initial)
 
     def change_buttons(self, key):
+        while self.widgets:
+            widget = self.widgets.pop()
+            self.buttons.removeWidget(widget)
+            widget.deleteLater()
+
         self.add_buttons(key)
 
     def add_buttons(self, initial):
@@ -27,6 +33,7 @@ class ButtonGrid(QGroupBox):
         division = divide_widgets_per_column(len(widgets), columns)
         grid = create_grid(widgets, list(division))
         for widget, (row, column) in grid:
+            self.widgets.append(widget)
             self.buttons.addWidget(widget, row, column)
 
     def create_button(self, key, name):
