@@ -1,10 +1,14 @@
 import sys
+import logging
 
 from PySide6.QtCore import QCoreApplication, Qt
 from PySide6.QtWidgets import QApplication
-from pokerandom import PokeRandom
 
 from platinum import LOCATIONS, ENTRANCES
+from pokerandom import PokeRandom
+
+logging.basicConfig(filename='pokerandom.log', level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s:%(message)s')
 
 
 if __name__ == '__main__':
