@@ -11,8 +11,14 @@ class Db:
         self._cursor.execute("INSERT INTO link VALUES (?, ?)",
                              (link.entrance, link.destination))
 
-    def get(self):
-        self._cursor.execute("SELECT * FROM link")
+    def get(self, keys=None):
+        if keys is None:
+            self._cursor.execute("SELECT * FROM link")
+        else:
+            args = [key[0] for key in keys]
+            self._cursor.execute('SELECT * FROM link WHERE entrance IN ({seq}) OR destination IN ({seq})'
+                                 .format(seq=','.join(['?']*len(args))),
+                                 args*2)
         return (Link(el[0], el[1]) for el in self._cursor.fetchall())
 
     def get_from_entrance(self, key):
