@@ -35,7 +35,19 @@ class LocationGrid(QGroupBox):
     def hide_destination(self, key):
         for widget in self.widgets:
             if widget.key == key:
-                widget.widget.setPalette(colors.default)
+                widget.widget.setPalette(colors.light)
+
+    def set_buttons(self, location, links, parent):
+        self.clear_colors()
+        locations = [parent(link.entrance) if parent(link.destination) == location else parent(link.destination)
+                     for link in links]
+        for widget in self.widgets:
+            if widget.key in locations:
+                widget.widget.setPalette(colors.light)
+
+    def clear_colors(self):
+        for widget in self.widgets:
+            widget.widget.setPalette(colors.default)
 
     def _create_widgets(self):
         for category in self.elements.keys():

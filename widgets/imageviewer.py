@@ -9,12 +9,11 @@ from errors import ImageNotFoundError
 
 
 class ImageViewer(QLabel):
-    def __init__(self, initial_location, max_width=1000, max_height=1000):
+    def __init__(self, max_width=1000, max_height=1000):
         super().__init__()
 
         self.max_width = max_width
         self.max_height = max_height
-        self.set_image(initial_location)
 
     def set_image(self, location):
         filename = self._convert_city_to_imagename(location)

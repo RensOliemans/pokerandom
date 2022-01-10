@@ -16,15 +16,14 @@ class PokeRandom(QWidget):
 
         self._highlighting_entrances = []
 
-        self.locations = widgets.LocationGrid(locations, self.change_current_location,
+        self.locations = widgets.LocationGrid(locations, self.set_current_location,
                                               self.show_connections, self.hide_connections, 15)
         self.connections = widgets.ConnectionGrid(self.entrances, self.select_connection,
                                                   self.show_connection, self.hide_connection, 10)
         self.status = widgets.Status(self.add_link, self.get_name_of_location)
-        self.image = widgets.ImageViewer(self.current_location, max_height=800, max_width=800)
+        self.image = widgets.ImageViewer(max_height=800, max_width=800)
 
-        self.connections.set_buttons(self.current_location,
-                                     self.link_manager.get_links(self.entrances[self.current_location]))
+        self.set_current_location(self.current_location)
 
         self.left = QVBoxLayout()
         self.left.addWidget(self.locations)
@@ -38,10 +37,12 @@ class PokeRandom(QWidget):
     def setVisible(self, visible):
         super(PokeRandom, self).setVisible(visible)
 
-    def change_current_location(self, location):
+    def set_current_location(self, location):
         self.current_location = location
         self.image.set_image(location)
-        self.connections.set_buttons(location, self.link_manager.get_links(self.entrances[location]))
+        links = self.link_manager.get_links(self.entrances[location])
+        self.locations.set_buttons(location, links, self.get_location_of_entrance)
+        self.connections.set_buttons(location, links)
 
     def select_connection(self, location):
         self.status.select_item(location)
