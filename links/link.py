@@ -2,10 +2,11 @@ import logging
 
 
 class Link:
-    def __init__(self, entrance, destination=None):
+    def __init__(self, entrance, destination=None, one_way=False):
         assert entrance is not None, 'Entrance cannot be None'
         self.entrance = entrance
         self.destination = destination
+        self.one_way = one_way
 
     @property
     def dead_end(self):

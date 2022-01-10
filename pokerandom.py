@@ -49,8 +49,8 @@ class PokeRandom(QWidget):
     def select_connection(self, location):
         self.status.select_item(location)
 
-    def add_link(self, entrance, destination):
-        self.link_manager.add_link(Link(entrance, destination))
+    def add_link(self, entrance, destination, one_way=False):
+        self.link_manager.add_link(Link(entrance, destination, one_way))
         self.connections.set_buttons(self.current_location,
                                      self.link_manager.get_links(self.entrances[self.current_location]))
 
@@ -92,5 +92,5 @@ class PokeRandom(QWidget):
             self.connections.hide_destination(link.entrance)
 
     def setup_shortcuts(self):
-        shortcuts = widgets.Shortcuts(self, self.status.cancel)
+        shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway)
 

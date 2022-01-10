@@ -1,4 +1,3 @@
-from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QLabel, QGroupBox, QGridLayout
 
 
@@ -7,16 +6,19 @@ class Status(QGroupBox):
         super().__init__('Current Edit')
 
         self._entrance = None
+        self._one_way = False
         self.add_link_callback = add_link_callback
         self.get_name_of_location = get_name_of_location
 
         self.entrance_widget = QLabel('Select a location')
         self.destination_widget = QLabel('')
+        self.one_way_widget = QLabel('')
 
         self.layout = QGridLayout(self)
 
-        self.layout.addWidget(self.entrance_widget, 1, 0)
-        self.layout.addWidget(self.destination_widget, 1, 1)
+        self.layout.addWidget(self.entrance_widget, 0, 0)
+        self.layout.addWidget(self.one_way_widget, 1, 1)
+        self.layout.addWidget(self.destination_widget, 0, 1)
 
     def select_item(self, key):
         if self.entrance is None:
@@ -24,11 +26,27 @@ class Status(QGroupBox):
         elif self.entrance == key:
             return
         else:
-            self.add_link_callback(self.entrance, key)
+            self.add_link_callback(self.entrance, key, self._one_way)
             self.entrance = None
+            self.one_way = False
 
     def cancel(self):
         self.entrance = None
+
+    def oneway(self):
+        self.one_way = not self.one_way
+
+    @property
+    def one_way(self):
+        return self._one_way
+
+    @one_way.setter
+    def one_way(self, value):
+        self._one_way = value
+        if value:
+            self.one_way_widget.setText('one-way enabled')
+        else:
+            self.one_way_widget.setText('')
 
     @property
     def entrance(self):

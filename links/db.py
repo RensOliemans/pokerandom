@@ -8,8 +8,8 @@ class Db:
         self._database = database
 
     def insert(self, link: Link):
-        self._cursor.execute("INSERT INTO link VALUES (?, ?)",
-                             (link.entrance, link.destination))
+        self._cursor.execute("INSERT INTO link VALUES (?, ?, ?)",
+                             (link.entrance, link.destination, link.one_way))
 
     def get(self, keys=None):
         if keys is None:
