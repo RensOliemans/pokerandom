@@ -7,21 +7,29 @@ class Shortcuts:
     def __init__(self, parent, cancel, one_way, blocked):
         self.parent = parent
 
-        dead_end = lambda: blocked(Blocked.DEAD_END)
-        cut = lambda: blocked(Blocked.CUT)
-
         self._add_shortcut('q', cancel)
         self._add_shortcut('1', one_way)
+
+        dead_end = lambda: blocked(Blocked.DEAD_END)
         self._add_shortcut('d', dead_end)
-        self._add_shortcut('c', cut)
-        # self.add_cut()
-        # self.add_rocksmash()
-        # self.add_strength()
-        # self.add_surf()
-        # self.add_rockclimb()
-        # self.add_waterfall()
-        # self.add_trainer()
-        # self.add_event()
+
+        rock_smash = lambda: blocked(Blocked.ROCK_SMASH)
+        self._add_shortcut('r', rock_smash)
+
+        strength = lambda: blocked(Blocked.STRENGTH)
+        self._add_shortcut('s', strength)
+
+        surf = lambda: blocked(Blocked.SURF)
+        self._add_shortcut('f', surf)
+
+        waterfall = lambda: blocked(Blocked.WATERFALL)
+        self._add_shortcut('w', waterfall)
+
+        trainer = lambda: blocked(Blocked.TRAINER)
+        self._add_shortcut('t', trainer)
+
+        event = lambda: blocked(Blocked.EVENT)
+        self._add_shortcut('e', event)
 
     def _add_shortcut(self, hotkey, callback):
         shortcut = QShortcut(self.parent)

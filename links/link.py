@@ -1,5 +1,7 @@
 import logging
 
+from util.blocked import Blocked
+
 
 class Link:
     def __init__(self, entrance, destination=None, one_way=False, block=None):
@@ -14,6 +16,10 @@ class Link:
 
     @property
     def dead_end(self):
+        return self.destination is None and self.block == Blocked.DEAD_END
+
+    @property
+    def blocked(self):
         return self.destination is None
 
     def other(self, key):

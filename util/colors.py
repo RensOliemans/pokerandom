@@ -4,7 +4,9 @@ from PySide6.QtGui import QColor, QPalette
 
 default = QPalette()
 existing_link = QPalette(QColor('#9EE5DD'))
-hover = QPalette(QColor('#264653'))
 linked = QPalette(QColor('#2A9D8F'))
-light = QPalette(QColor('#9EE5DD'))
 dead_end = QPalette(QColor('#B5ACC3'))
+rock_smash = QPalette(QColor('#744343'))
+strength = QPalette(QColor('#ffc600'))
+surf = QPalette(QColor('#083B68'))
+waterfall = QPalette(QColor('#590456'))

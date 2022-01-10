@@ -3,6 +3,7 @@ from PySide6.QtGui import QEnterEvent
 from PySide6.QtWidgets import QPushButton
 
 from util import colors
+from util.blocked import Blocked
 
 
 class EntranceButton(QPushButton):
@@ -14,18 +15,37 @@ class EntranceButton(QPushButton):
         self.on_leave = on_leave
 
         self.clicked.connect(lambda: on_click(key))
-        self.set_palette()
+        self.draw()
 
-    def set_palette(self):
+    def draw(self, active=False):
         if self.link is None:
             self.setPalette(colors.default)
             return
 
         if self.link.dead_end:
-            self.setStyleSheet('QWidget { text-decoration: line-through; }')
-            self.setPalette(colors.dead_end)
+            self.draw_dead_end()
+            return
+
+        if active:
+            self.setPalette(colors.linked)
         else:
             self.setPalette(colors.existing_link)
+
+    def draw_dead_end(self):
+        if self.link.dead_end:
+            self.setStyleSheet('QWidget { text-decoration: line-through; }')
+            self.setPalette(colors.dead_end)
+            return
+
+        blocked = self.link.blocked
+        if blocked == Blocked.ROCK_SMASH:
+            self.setPalette(colors.rock_smash)
+        elif blocked == Blocked.STRENGTH:
+            self.setPalette(colors.strength)
+        elif blocked == Blocked.SURF:
+            self.setPalette(colors.surf)
+        elif blocked == Blocked.WATERFALL:
+            self.setPalette(colors.waterfall)
 
     def enterEvent(self, event: QEnterEvent) -> None:
         if self.on_enter:

@@ -1,6 +1,7 @@
 import sqlite3
 
 from links.link import Link
+from util.blocked import Blocked
 
 
 class Db:
@@ -8,7 +9,7 @@ class Db:
         self._database = database
 
     def insert(self, link: Link):
-        block = str(link.block) if link.block is not None else None
+        block = link.block.value if link.block is not None else None
         self._cursor.execute("INSERT INTO link VALUES (?, ?, ?, ?)",
                              (link.entrance, link.destination, link.one_way, block))
 
@@ -37,9 +38,9 @@ class Db:
 
     @staticmethod
     def _convert(element):
-        destination = element[1]
         block = element[3]
-        return Link(element[0], element[1], element[2], element[3])
+        block = Blocked(int(block)) if block is not None else None
+        return Link(element[0], element[1], element[2], block)
 
     def __enter__(self):
         self._conn = sqlite3.connect(self._database, isolation_level=None)
