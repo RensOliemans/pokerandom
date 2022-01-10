@@ -15,7 +15,7 @@ class PokeRandom(QWidget):
         self.entrances = entrances
 
         self.locations = widgets.LocationGrid(locations, self.change_current_location, 15)
-        self.connections = widgets.ConnectionGrid(self.entrances, self.select_connection, 10)
+        self.connections = widgets.ConnectionGrid(self.entrances, self.select_connection, self.show_connections, 10)
         self.status = widgets.Status(self.add_link, self.get_name_of_location)
         self.image = widgets.ImageViewer(self.current_location, max_height=800, max_width=800)
 
@@ -51,6 +51,12 @@ class PokeRandom(QWidget):
         all_entrances = [self.entrances[x] for x in self.entrances.keys()]
         flattened = [i for sub in all_entrances for i in sub]
         return [x[1] for x in flattened if key == x[0]][0]
+
+    def show_connections(self, key):
+        link = self.link_manager.get_link(key)
+        if link:
+            destination = link.other(key)
+            print(destination)
 
 
 

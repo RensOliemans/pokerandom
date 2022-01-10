@@ -8,6 +8,12 @@ class Link:
     def dead_end(self):
         return self.destination is None
 
+    def other(self, key):
+        assert key in self, f"key {key} not found in link {self}"
+        if key == self.entrance:
+            return self.destination
+        return self.entrance
+
     def __contains__(self, item):
         return item is not None and (item == self.entrance or item == self.destination)
 

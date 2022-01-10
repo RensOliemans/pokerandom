@@ -24,7 +24,8 @@ class Db:
     def get_from_entrance(self, key):
         self._cursor.execute("SELECT * FROM link WHERE entrance = (?) OR destination = (?)",
                              (key, key))
-        return self._cursor.fetchone()
+        link = self._cursor.fetchone()
+        return Link(link[0], link[1]) if link else None
 
     def remove_by_entrance(self, key):
         self._cursor.execute('DELETE FROM link WHERE entrance = (?) OR destination = (?)',
