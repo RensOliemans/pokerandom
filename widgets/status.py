@@ -36,6 +36,13 @@ class Status(QGroupBox):
     def oneway(self):
         self.one_way = not self.one_way
 
+    def dead_end(self):
+        if self.entrance is None:
+            return
+        else:
+            self.add_link_callback(self.entrance, destination=None, one_way=False)
+            self.entrance = None
+
     @property
     def one_way(self):
         return self._one_way

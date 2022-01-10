@@ -17,10 +17,14 @@ class EntranceButton(QPushButton):
         self.set_palette()
 
     def set_palette(self):
-        if self.link is not None:
-            self.setPalette(colors.existing_link)
-        else:
+        if self.link is None:
             self.setPalette(colors.default)
+            return
+
+        if self.link.dead_end:
+            self.setPalette(colors.dead_end)
+        else:
+            self.setPalette(colors.existing_link)
 
     def enterEvent(self, event: QEnterEvent) -> None:
         if self.on_enter:

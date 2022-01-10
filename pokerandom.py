@@ -76,7 +76,7 @@ class PokeRandom(QWidget):
         if link:
             destination = link.other(key)
             self.locations.hide_destination(self.get_location_of_entrance(destination))
-            self.connections.hide_destination(destination)
+            self.connections.hide_destination(destination, link.dead_end)
 
     def show_connections(self, key):
         self._highlighting_entrances = self.link_manager.get_links(self.entrances[key])
@@ -88,9 +88,10 @@ class PokeRandom(QWidget):
 
     def hide_connections(self, key):
         for link in self._highlighting_entrances:
-            self.connections.hide_destination(link.destination)
-            self.connections.hide_destination(link.entrance)
+            self.connections.hide_destination(link.destination, link.dead_end)
+            self.connections.hide_destination(link.entrance, link.dead_end)
 
     def setup_shortcuts(self):
-        shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway)
+        shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway,
+                                      self.status.dead_end)
 

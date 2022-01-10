@@ -2,12 +2,12 @@ from PySide6.QtGui import QShortcut, QKeySequence
 
 
 class Shortcuts:
-    def __init__(self, parent, cancel, oneway):  #, deadend, cut, rocksmash, strength, surf, rockclimb, waterfall, trainer, event):
+    def __init__(self, parent, cancel, one_way, dead_end):  #, deadend, cut, rocksmash, strength, surf, rockclimb, waterfall, trainer, event):
         self.parent = parent
 
-        self.add_cancel(cancel)
-        self.add_oneway(oneway)
-        # self.add_deadend()
+        self._add_shortcut('q', cancel)
+        self._add_shortcut('1', one_way)
+        self._add_shortcut('d', dead_end)
         # self.add_cut()
         # self.add_rocksmash()
         # self.add_strength()
@@ -17,12 +17,7 @@ class Shortcuts:
         # self.add_trainer()
         # self.add_event()
 
-    def add_cancel(self, callback):
-        cancel = QShortcut(self.parent)
-        cancel.setKey(QKeySequence('q'))
-        cancel.activated.connect(callback)
-
-    def add_oneway(self, callback):
-        oneway = QShortcut(self.parent)
-        oneway.setKey(QKeySequence('1'))
-        oneway.activated.connect(callback)
+    def _add_shortcut(self, hotkey, callback):
+        shortcut = QShortcut(self.parent)
+        shortcut.setKey(QKeySequence(hotkey))
+        shortcut.activated.connect(callback)

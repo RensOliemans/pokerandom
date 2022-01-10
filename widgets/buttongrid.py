@@ -28,10 +28,13 @@ class ConnectionGrid(QGroupBox):
             if widget.key == key:
                 widget.widget.setPalette(colors.linked)
 
-    def hide_destination(self, key):
+    def hide_destination(self, key, dead_end):
         for widget in self.widgets:
             if widget.key == key:
-                widget.widget.setPalette(colors.existing_link)
+                if dead_end:
+                    widget.widget.setPalette(colors.dead_end)
+                else:
+                    widget.widget.setPalette(colors.existing_link)
 
     def _remove_buttons(self):
         while self.widgets:
