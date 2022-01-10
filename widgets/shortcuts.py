@@ -19,7 +19,7 @@ class Shortcuts:
 
     def add_cancel(self, callback):
         cancel = QShortcut(self.parent)
-        cancel.setKey(QKeySequence('c'))
+        cancel.setKey(QKeySequence('q'))
         cancel.activated.connect(callback)
 
     def add_oneway(self, callback):

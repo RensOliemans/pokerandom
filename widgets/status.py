@@ -44,7 +44,7 @@ class Status(QGroupBox):
     def one_way(self, value):
         self._one_way = value
         if value:
-            self.one_way_widget.setText('one-way enabled')
+            self.one_way_widget.setText('One-way enabled')
         else:
             self.one_way_widget.setText('')
 
