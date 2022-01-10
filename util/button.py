@@ -6,11 +6,12 @@ from util import colors
 
 
 class EntranceButton(QPushButton):
-    def __init__(self, name, key, on_click, on_hover=None, link=None):
+    def __init__(self, name, key, on_click, on_enter=None, on_leave=None, link=None):
         super().__init__(name)
         self.key = key
         self.link = link
-        self.on_hover = on_hover
+        self.on_enter = on_enter
+        self.on_leave = on_leave
 
         self.clicked.connect(lambda: on_click(key))
         self.set_palette()
@@ -22,12 +23,13 @@ class EntranceButton(QPushButton):
             self.setPalette(colors.default)
 
     def enterEvent(self, event: QEnterEvent) -> None:
-        if self.on_hover:
-            self.on_hover(self.key)
+        if self.on_enter:
+            self.on_enter(self.key)
 
     def leaveEvent(self, event: QEvent) -> None:
-        self.set_palette()
+        if self.on_leave:
+            self.on_leave(self.key)
 
 
-def create_button(key, name, on_click, on_hover=None, link=None):
-    return EntranceButton(name, key, on_click, on_hover, link)
+def create_button(key, name, on_click, on_hover=None, on_leave=None, link=None):
+    return EntranceButton(name, key, on_click, on_hover, on_leave, link)

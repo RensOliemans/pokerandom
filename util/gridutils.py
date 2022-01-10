@@ -1,4 +1,5 @@
 import math
+import copy
 
 
 def compute_cols(n, max_rows):
@@ -14,6 +15,7 @@ def divide_widgets_per_column(widgets, columns):
 
 
 def create_grid(widgets, division):
+    widgets = copy.copy(widgets)
     column, row = 0, 0
     while widgets:
         widget = widgets.pop(0)

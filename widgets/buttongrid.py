@@ -5,12 +5,13 @@ from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
 
 
 class ConnectionGrid(QGroupBox):
-    def __init__(self, elements, on_click, on_hover, max_rows):
+    def __init__(self, elements, on_click, on_enter, on_leave, max_rows):
         super().__init__()
 
         self.elements = elements
         self.on_click = on_click
-        self.on_hover = on_hover
+        self.on_enter = on_enter
+        self.on_leave = on_leave
         self.max_rows = max_rows
 
         self.widgets = []
@@ -40,7 +41,7 @@ class ConnectionGrid(QGroupBox):
         elements = self.elements[location]
         for key, name in elements:
             link = get_link_of_button(key, links)
-            yield create_button(key, name, self.on_click, self.on_hover, link)
+            yield create_button(key, name, self.on_click, self.on_enter, self.on_leave, link)
 
 
 def get_link_of_button(key, links):

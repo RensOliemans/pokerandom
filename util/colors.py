@@ -5,3 +5,4 @@ from PySide6.QtGui import QColor, QPalette
 default = QPalette()
 existing_link = QPalette(QColor('#A599B5'))
 hover = QPalette(QColor('#264653'))
+linked = QPalette(QColor('#2A9D8F'))
