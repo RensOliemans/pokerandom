@@ -1,13 +1,19 @@
 from PySide6.QtGui import QShortcut, QKeySequence
 
+from util.blocked import Blocked
+
 
 class Shortcuts:
-    def __init__(self, parent, cancel, one_way, dead_end):  #, deadend, cut, rocksmash, strength, surf, rockclimb, waterfall, trainer, event):
+    def __init__(self, parent, cancel, one_way, blocked):
         self.parent = parent
+
+        dead_end = lambda: blocked(Blocked.DEAD_END)
+        cut = lambda: blocked(Blocked.CUT)
 
         self._add_shortcut('q', cancel)
         self._add_shortcut('1', one_way)
         self._add_shortcut('d', dead_end)
+        self._add_shortcut('c', cut)
         # self.add_cut()
         # self.add_rocksmash()
         # self.add_strength()

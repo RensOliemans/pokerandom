@@ -36,11 +36,11 @@ class Status(QGroupBox):
     def oneway(self):
         self.one_way = not self.one_way
 
-    def dead_end(self):
+    def blocked(self, block):
         if self.entrance is None:
             return
         else:
-            self.add_link_callback(self.entrance, destination=None, one_way=False)
+            self.add_link_callback(self.entrance, destination=None, one_way=False, block=block)
             self.entrance = None
 
     @property
