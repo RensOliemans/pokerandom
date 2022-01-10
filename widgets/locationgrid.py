@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QGridLayout, QLabel, QGroupBox, QPushButton, QWidg
 from util import colors
 from util.button import create_button
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
+from util.widget import Widget
 
 
 class LocationGrid(QGroupBox):
@@ -42,15 +43,3 @@ class LocationGrid(QGroupBox):
                              create_button(location_key, location_name, self.on_click))
             yield Widget('hrule', QLabel('----------------'))
 
-
-class Widget:
-    def __init__(self, key, widget: QWidget):
-        self.key = key
-        self.widget = widget
-
-    def __eq__(self, other):
-        return (isinstance(other, Widget) and self.key == other.key
-                or self.key == other)
-
-    def __hash__(self):
-        return hash(self.key)

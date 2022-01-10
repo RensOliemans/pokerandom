@@ -1,7 +1,9 @@
 from PySide6.QtWidgets import QGridLayout, QGroupBox
 
+from util import colors
 from util.button import create_button
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
+from util.widget import Widget
 
 
 class ConnectionGrid(QGroupBox):
@@ -14,16 +16,26 @@ class ConnectionGrid(QGroupBox):
         self.on_leave = on_leave
         self.max_rows = max_rows
 
-        self.widgets = []
+        self.widgets: [Widget] = []
         self.buttons = QGridLayout(self)
 
     def set_buttons(self, key, links):
         self._remove_buttons()
         self._add_buttons(key, links)
 
+    def show_destination(self, key):
+        for widget in self.widgets:
+            if widget.key == key:
+                widget.widget.setPalette(colors.linked)
+
+    def hide_destination(self, key):
+        for widget in self.widgets:
+            if widget.key == key:
+                widget.widget.setPalette(colors.existing_link)
+
     def _remove_buttons(self):
         while self.widgets:
-            widget = self.widgets.pop()
+            widget = self.widgets.pop().widget
             self.buttons.removeWidget(widget)
             widget.deleteLater()
 
@@ -35,13 +47,13 @@ class ConnectionGrid(QGroupBox):
         grid = create_grid(widgets, list(division))
         for widget, (row, column) in grid:
             self.widgets.append(widget)
-            self.buttons.addWidget(widget, row, column)
+            self.buttons.addWidget(widget.widget, row, column)
 
     def _create_widgets(self, location, links):
         elements = self.elements[location]
         for key, name in elements:
             link = get_link_of_button(key, links)
-            yield create_button(key, name, self.on_click, self.on_enter, self.on_leave, link)
+            yield Widget(key, create_button(key, name, self.on_click, self.on_enter, self.on_leave, link))
 
 
 def get_link_of_button(key, links):

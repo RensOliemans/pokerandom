@@ -63,12 +63,13 @@ class PokeRandom(QWidget):
         if link:
             destination = link.other(key)
             self.locations.show_destination(self.get_location_of_entrance(destination))
-            # self.connections.show_destination(destination)
+            self.connections.show_destination(destination)
 
     def hide_connections(self, key):
         link = self.link_manager.get_link(key)
         if link:
             destination = link.other(key)
             self.locations.hide_destination(self.get_location_of_entrance(destination))
+            self.connections.hide_destination(destination)
 
 
