@@ -128,6 +128,7 @@ ENTRANCES = {
          ('resort_area_pc_e', 'Resort Area PC E'),
     ],
     'sandgem_jubilife': [
+        ('verity_lakefront', 'Verity Lakefront'),
         ('sandgem_sw', 'Sandgem SW'),
         ('sandgem_s', 'Sandgem S'),
         ('sandgem_mart', 'Sandgem Mart'),

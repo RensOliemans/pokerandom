@@ -19,7 +19,7 @@ if __name__ == '__main__':
     QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication()
     with Db(database) as db:
-        pokerandom = PokeRandom(locations=LOCATIONS, initial_location=LOCATIONS['cities'][1],
+        pokerandom = PokeRandom(locations=LOCATIONS, initial_location=LOCATIONS['cities'][0],
                                 entrances=ENTRANCES, db=db)
         pokerandom.show()
         sys.exit(app.exec())
