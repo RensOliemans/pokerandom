@@ -1,3 +1,6 @@
+import logging
+
+
 class Link:
     def __init__(self, entrance, destination=None):
         assert entrance is not None, 'Entrance cannot be None'
@@ -9,7 +12,8 @@ class Link:
         return self.destination is None
 
     def other(self, key):
-        assert key in self, f"key {key} not found in link {self}"
+        if key not in self:
+            logging.error('Key %s was not found in link %s', key, self)
         if key == self.entrance:
             return self.destination
         return self.entrance

@@ -17,8 +17,8 @@ class LinkManager:
         self._db.remove_by_entrance(link.destination)
         self._db.insert(link)
 
-    def get_links(self, key=None):
-        return list(self._db.get(key))
+    def get_links(self, keys=None):
+        return list(self._db.get(keys))
 
     def get_link(self, key):
         return self._db.get_from_entrance(key)

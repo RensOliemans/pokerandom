@@ -7,10 +7,12 @@ from util.widget import Widget
 
 
 class LocationGrid(QGroupBox):
-    def __init__(self, elements, on_click, max_rows):
+    def __init__(self, elements, on_click, on_enter, on_leave, max_rows):
         super().__init__()
         self.elements = elements
         self.on_click = on_click
+        self.on_enter = on_enter
+        self.on_leave = on_leave
         self.max_rows = max_rows
         self.widgets = list(self._create_widgets())
 
@@ -40,6 +42,6 @@ class LocationGrid(QGroupBox):
             yield Widget('category', QLabel(category.upper()))
             for location_key, location_name in self.elements[category]:
                 yield Widget(location_key,
-                             create_button(location_key, location_name, self.on_click))
+                             create_button(location_key, location_name, self.on_click, self.on_enter, self.on_leave))
             yield Widget('hrule', QLabel('----------------'))
 
