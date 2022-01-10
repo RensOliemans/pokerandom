@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLayout
 
 import widgets
 from links.link import Link
@@ -25,14 +25,16 @@ class PokeRandom(QWidget):
 
         self.set_current_location(self.current_location)
 
+        self.setup_shortcuts()
+
         self.left = QVBoxLayout()
         self.left.addWidget(self.locations)
         self.left.addWidget(self.connections)
-        self.left.addWidget(self.status)
 
         main_layout = QGridLayout(self)
-        main_layout.addLayout(self.left, 0, 0)
-        main_layout.addWidget(self.image, 0, 1)
+        main_layout.addLayout(self.left, 1, 0)
+        main_layout.addWidget(self.status, 0, 1)
+        main_layout.addWidget(self.image, 1, 1)
 
     def setVisible(self, visible):
         super(PokeRandom, self).setVisible(visible)
@@ -88,4 +90,7 @@ class PokeRandom(QWidget):
         for link in self._highlighting_entrances:
             self.connections.hide_destination(link.destination)
             self.connections.hide_destination(link.entrance)
+
+    def setup_shortcuts(self):
+        shortcuts = widgets.Shortcuts(self, self.status.cancel)
 
