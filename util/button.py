@@ -22,6 +22,7 @@ class EntranceButton(QPushButton):
             return
 
         if self.link.dead_end:
+            self.setStyleSheet('QWidget { text-decoration: line-through; }')
             self.setPalette(colors.dead_end)
         else:
             self.setPalette(colors.existing_link)

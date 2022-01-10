@@ -23,16 +23,19 @@ class ConnectionGrid(QGroupBox):
         self._remove_buttons()
         self._add_buttons(key, links)
 
-    def show_destination(self, key):
+    def show_destination(self, key, dead_end=False):
         for widget in self.widgets:
             if widget.key == key:
+                if dead_end:
+                    widget.widget.setStyleSheet('QWidget { text-decoration: line-through; }')
                 widget.widget.setPalette(colors.linked)
 
-    def hide_destination(self, key, dead_end):
+    def hide_destination(self, key, dead_end=False):
         for widget in self.widgets:
             if widget.key == key:
                 if dead_end:
                     widget.widget.setPalette(colors.dead_end)
+                    widget.widget.setStyleSheet('QWidget { text-decoration: line-through; }')
                 else:
                     widget.widget.setPalette(colors.existing_link)
 
