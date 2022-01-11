@@ -61,5 +61,6 @@ class LocationGrid(QGroupBox):
         for category in self.elements.keys():
             for location_key, location_name in self.elements[category]:
                 yield Widget(location_key,
-                             create_button(location_key, location_name, self.on_click, self.on_enter, self.on_leave))
+                             create_button(location_key, location_name, self.on_click,
+                                           on_enter=self.on_enter, on_leave=self.on_leave))
 

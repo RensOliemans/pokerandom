@@ -6,11 +6,12 @@ from util.widget import Widget
 
 
 class ConnectionGrid(QGroupBox):
-    def __init__(self, elements, on_click, on_enter, on_leave, max_rows):
+    def __init__(self, elements, on_click, on_ctrl_click, on_enter, on_leave, max_rows):
         super().__init__()
 
         self.elements = elements
         self.on_click = on_click
+        self.on_ctrl_click = on_ctrl_click
         self.on_enter = on_enter
         self.on_leave = on_leave
         self.max_rows = max_rows
@@ -47,6 +48,7 @@ class ConnectionGrid(QGroupBox):
             widget = self.widgets.pop().widget
             self.buttons.removeWidget(widget)
             widget.deleteLater()
+        self.selected = None
 
     def _add_buttons(self, location, links):
         widgets = list(self._create_widgets(location, links))
@@ -62,7 +64,8 @@ class ConnectionGrid(QGroupBox):
         elements = self.elements[location]
         for key, name in elements:
             link = get_link_of_button(key, links)
-            yield Widget(key, create_button(key, name, self.on_click, self.on_enter, self.on_leave, link))
+            yield Widget(key, create_button(key, name, self.on_click, on_ctrl_click=self.on_ctrl_click,
+                                            on_enter=self.on_enter, on_leave=self.on_leave, link=link))
 
 
 def get_link_of_button(key, links):

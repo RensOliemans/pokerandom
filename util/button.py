@@ -1,5 +1,5 @@
 from PySide6.QtCore import QEvent
-from PySide6.QtGui import QEnterEvent
+from PySide6.QtGui import QEnterEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import QPushButton
 
 from util import colors
@@ -7,15 +7,22 @@ from util.blocked import Blocked
 
 
 class EntranceButton(QPushButton):
-    def __init__(self, name, key, on_click, on_enter=None, on_leave=None, link=None):
+    def __init__(self, name, key, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None):
         super().__init__(name)
         self.key = key
         self.link = link
+        self.on_ctrl_click = on_ctrl_click
         self.on_enter = on_enter
         self.on_leave = on_leave
 
         self.clicked.connect(lambda: on_click(key))
         self.draw()
+
+    def mousePressEvent(self, e: QMouseEvent) -> None:
+        if e.modifiers() == Qt.ControlModifier and self.on_ctrl_click is not None:
+            return self.on_ctrl_click(self.link.other(self.key))
+
+        super().mousePressEvent(e)
 
     def draw(self, active=False, selected=False):
         if selected:
@@ -62,5 +69,5 @@ class EntranceButton(QPushButton):
             self.on_leave(self.key)
 
 
-def create_button(key, name, on_click, on_hover=None, on_leave=None, link=None):
-    return EntranceButton(name, key, on_click, on_hover, on_leave, link)
+def create_button(key, name, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None):
+    return EntranceButton(name, key, on_click, on_ctrl_click, on_enter, on_leave, link)
