@@ -7,13 +7,15 @@ from util.blocked import Blocked
 
 
 class EntranceButton(QPushButton):
-    def __init__(self, name, key, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None):
+    def __init__(self, name, key, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
+                 get_location_name=None):
         super().__init__(name)
         self.key = key
         self.link = link
         self.on_ctrl_click = on_ctrl_click
         self.on_enter = on_enter
         self.on_leave = on_leave
+        self.get_location_name = get_location_name
 
         self.clicked.connect(lambda: on_click(key))
         self.draw()
@@ -26,6 +28,7 @@ class EntranceButton(QPushButton):
 
     def draw(self, active=False, selected=False):
         if selected:
+            self.setToolTip('Click on another location to link it to this one.')
             self.setPalette(colors.selected)
         elif self.link is None:
             self.setPalette(colors.default)
@@ -34,10 +37,12 @@ class EntranceButton(QPushButton):
         elif active:
             self.setPalette(colors.linked)
         else:
+            self.setToolTip(self.get_location_name(self.link.other(self.key)))
             self.setPalette(colors.existing_link)
 
     def draw_blocked(self):
         if self.link.dead_end:
+            self.setToolTip(f'Dead end')
             self.setStyleSheet('QWidget { text-decoration: line-through; }')
             self.setPalette(colors.dead_end)
             return
@@ -59,6 +64,7 @@ class EntranceButton(QPushButton):
             self.setPalette(colors.trainer)
         elif block == Blocked.EVENT:
             self.setPalette(colors.event)
+        self.setToolTip(f'Blocked by {block}')
 
     def enterEvent(self, event: QEnterEvent) -> None:
         if self.on_enter:
@@ -69,5 +75,6 @@ class EntranceButton(QPushButton):
             self.on_leave(self.key)
 
 
-def create_button(key, name, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None):
-    return EntranceButton(name, key, on_click, on_ctrl_click, on_enter, on_leave, link)
+def create_button(key, name, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
+                  get_location_name=None):
+    return EntranceButton(name, key, on_click, on_ctrl_click, on_enter, on_leave, link, get_location_name)

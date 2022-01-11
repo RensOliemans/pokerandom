@@ -23,7 +23,8 @@ class PokeRandom(QWidget):
         )
         self.connections = widgets.ConnectionGrid(
             self.entrances, on_click=self.select_connection, on_ctrl_click=self._change_location_by_entrance,
-            on_enter=self.show_connection, on_leave=self.hide_connection, max_rows=10
+            on_enter=self.show_connection, on_leave=self.hide_connection, get_location_name=self.get_name_of_location,
+            max_rows=10
         )
         self.status = widgets.Status(self.selected, self.add_link, self.get_name_of_location)
         self.image = widgets.ImageViewer(max_height=800, max_width=800)

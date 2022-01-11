@@ -21,6 +21,7 @@ class ImageViewer(QLabel):
             image = self._load_image(filename)
         except ImageNotFoundError as e:
             logging.info(e)
+            self.setPixmap(QPixmap())
             return
 
         if image:

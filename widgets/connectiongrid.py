@@ -6,7 +6,7 @@ from util.widget import Widget
 
 
 class ConnectionGrid(QGroupBox):
-    def __init__(self, elements, on_click, on_ctrl_click, on_enter, on_leave, max_rows):
+    def __init__(self, elements, on_click, on_ctrl_click, on_enter, on_leave, get_location_name, max_rows):
         super().__init__()
 
         self.elements = elements
@@ -15,6 +15,7 @@ class ConnectionGrid(QGroupBox):
         self.on_enter = on_enter
         self.on_leave = on_leave
         self.max_rows = max_rows
+        self.get_location_name = get_location_name
 
         self.selected = None
 
@@ -65,7 +66,8 @@ class ConnectionGrid(QGroupBox):
         for key, name in elements:
             link = get_link_of_button(key, links)
             yield Widget(key, create_button(key, name, self.on_click, on_ctrl_click=self.on_ctrl_click,
-                                            on_enter=self.on_enter, on_leave=self.on_leave, link=link))
+                                            on_enter=self.on_enter, on_leave=self.on_leave, link=link,
+                                            get_location_name=self.get_location_name))
 
 
 def get_link_of_button(key, links):
