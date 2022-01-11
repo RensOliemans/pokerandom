@@ -36,7 +36,9 @@ class EntranceButton(QPushButton):
             return
 
         block = self.link.block
-        if block == Blocked.ROCK_SMASH:
+        if block == Blocked.CUT:
+            self.setPalette(colors.cut)
+        elif block == Blocked.ROCK_SMASH:
             self.setPalette(colors.rock_smash)
         elif block == Blocked.STRENGTH:
             self.setPalette(colors.strength)
@@ -44,6 +46,8 @@ class EntranceButton(QPushButton):
             self.setPalette(colors.surf)
         elif block == Blocked.WATERFALL:
             self.setPalette(colors.waterfall)
+        elif block == Blocked.ROCK_CLIMB:
+            self.setPalette(colors.rock_climb)
         elif block == Blocked.TRAINER:
             self.setPalette(colors.trainer)
         elif block == Blocked.EVENT:
