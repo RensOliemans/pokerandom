@@ -17,16 +17,14 @@ class EntranceButton(QPushButton):
         self.clicked.connect(lambda: on_click(key))
         self.draw()
 
-    def draw(self, active=False):
-        if self.link is None:
+    def draw(self, active=False, selected=False):
+        if selected:
+            self.setPalette(colors.selected)
+        elif self.link is None:
             self.setPalette(colors.default)
-            return
-
-        if self.link.blocked:
+        elif self.link.blocked:
             self.draw_blocked()
-            return
-
-        if active:
+        elif active:
             self.setPalette(colors.linked)
         else:
             self.setPalette(colors.existing_link)

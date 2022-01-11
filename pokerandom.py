@@ -21,7 +21,7 @@ class PokeRandom(QWidget):
                                               self.show_connections, self.hide_connections, 15)
         self.connections = widgets.ConnectionGrid(self.entrances, self.select_connection,
                                                   self.show_connection, self.hide_connection, 10)
-        self.status = widgets.Status(self.add_link, self.get_name_of_location)
+        self.status = widgets.Status(self.selected, self.add_link, self.get_name_of_location)
         self.image = widgets.ImageViewer(max_height=800, max_width=800)
 
         self.set_current_location(self.current_location)
@@ -91,6 +91,9 @@ class PokeRandom(QWidget):
         for link in self._highlighting_entrances:
             self.connections.hide_destination(link.destination)
             self.connections.hide_destination(link.entrance)
+
+    def selected(self, key, selected):
+        self.connections.show_selected(key, selected)
 
     def setup_shortcuts(self):
         shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway,

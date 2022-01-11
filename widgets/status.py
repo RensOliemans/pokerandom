@@ -2,11 +2,12 @@ from PySide6.QtWidgets import QLabel, QGroupBox, QGridLayout
 
 
 class Status(QGroupBox):
-    def __init__(self, add_link_callback, get_name_of_location):
+    def __init__(self, selected_callback, add_link_callback, get_name_of_location):
         super().__init__('Current Edit')
 
         self._entrance = None
         self._one_way = False
+        self.selected_callback = selected_callback
         self.add_link_callback = add_link_callback
         self.get_name_of_location = get_name_of_location
 
@@ -66,3 +67,4 @@ class Status(QGroupBox):
             self.entrance_widget.setText('Select a location')
         else:
             self.entrance_widget.setText(f"Selected '{self.get_name_of_location(value)}'")
+        self.selected_callback(value, selected=value is not None)

@@ -15,6 +15,8 @@ class ConnectionGrid(QGroupBox):
         self.on_leave = on_leave
         self.max_rows = max_rows
 
+        self.selected = None
+
         self.widgets: [Widget] = []
         self.buttons = QGridLayout(self)
 
@@ -31,6 +33,14 @@ class ConnectionGrid(QGroupBox):
         for widget in self.widgets:
             if widget.key == key:
                 widget.widget.draw()
+
+    def show_selected(self, key, selected):
+        if not selected and self.selected is not None:
+            self.selected.widget.draw()
+        for widget in self.widgets:
+            if widget.key == key:
+                self.selected = widget
+                widget.widget.draw(selected=True)
 
     def _remove_buttons(self):
         while self.widgets:
