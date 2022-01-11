@@ -22,8 +22,8 @@ class EntranceButton(QPushButton):
             self.setPalette(colors.default)
             return
 
-        if self.link.dead_end:
-            self.draw_dead_end()
+        if self.link.blocked:
+            self.draw_blocked()
             return
 
         if active:
@@ -31,21 +31,25 @@ class EntranceButton(QPushButton):
         else:
             self.setPalette(colors.existing_link)
 
-    def draw_dead_end(self):
+    def draw_blocked(self):
         if self.link.dead_end:
             self.setStyleSheet('QWidget { text-decoration: line-through; }')
             self.setPalette(colors.dead_end)
             return
 
-        blocked = self.link.blocked
-        if blocked == Blocked.ROCK_SMASH:
+        block = self.link.block
+        if block == Blocked.ROCK_SMASH:
             self.setPalette(colors.rock_smash)
-        elif blocked == Blocked.STRENGTH:
+        elif block == Blocked.STRENGTH:
             self.setPalette(colors.strength)
-        elif blocked == Blocked.SURF:
+        elif block == Blocked.SURF:
             self.setPalette(colors.surf)
-        elif blocked == Blocked.WATERFALL:
+        elif block == Blocked.WATERFALL:
             self.setPalette(colors.waterfall)
+        elif block == Blocked.TRAINER:
+            self.setPalette(colors.trainer)
+        elif block == Blocked.EVENT:
+            self.setPalette(colors.event)
 
     def enterEvent(self, event: QEnterEvent) -> None:
         if self.on_enter:

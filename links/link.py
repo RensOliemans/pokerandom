@@ -19,7 +19,7 @@ class Link:
         return self.destination is None and self.block == Blocked.DEAD_END
 
     @property
-    def blocked(self):
+    def blocked(self) -> bool:
         return self.destination is None
 
     def other(self, key):

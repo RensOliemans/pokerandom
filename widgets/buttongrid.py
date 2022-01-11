@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QGridLayout, QGroupBox
 
-from util import colors
 from util.button import create_button
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
 from util.widget import Widget

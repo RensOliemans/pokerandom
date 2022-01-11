@@ -40,7 +40,6 @@ class Status(QGroupBox):
         if self.entrance is None:
             return
         else:
-            print(block)
             self.add_link_callback(self.entrance, destination=None, one_way=False, block=block)
             self.entrance = None
 
