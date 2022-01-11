@@ -16,6 +16,8 @@ class LocationGrid(QGroupBox):
         self.on_leave = on_leave
         self.max_rows = max_rows
 
+        self.second_destinations = []
+
         self.widgets: [Widget] = []
         self.buttons = QGridLayout(self)
         self.add_buttons()
@@ -44,6 +46,15 @@ class LocationGrid(QGroupBox):
         for widget in self.widgets:
             if widget.key == key:
                 widget.widget.setPalette(colors.existing_link)
+
+    def show_second_destination(self, key):
+        self.second_destinations.append(key)
+        self.show_destination(key)
+
+    def hide_second_destinations(self):
+        while self.second_destinations:
+            dest = self.second_destinations.pop()
+            self.hide_destination(dest)
 
     def set_buttons(self, location, links, parent):
         self.clear_colors()

@@ -1,12 +1,13 @@
-from PySide6.QtWidgets import QGridLayout, QGroupBox
+from PySide6.QtGui import QCursor
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication
 
-from util.button import create_button
+from util.button import create_button, EntranceButton
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
 from util.widget import Widget
 
 
 class ConnectionGrid(QGroupBox):
-    def __init__(self, elements, on_click, on_ctrl_click, on_enter, on_leave, get_location_name, max_rows):
+    def __init__(self, elements, on_click, on_ctrl_click, on_enter, on_leave, get_location_name, view_double, max_rows):
         super().__init__()
 
         self.elements = elements
@@ -14,10 +15,12 @@ class ConnectionGrid(QGroupBox):
         self.on_ctrl_click = on_ctrl_click
         self.on_enter = on_enter
         self.on_leave = on_leave
+        self.show_double = view_double
         self.max_rows = max_rows
         self.get_location_name = get_location_name
 
         self.selected = None
+        self.double_information = None
 
         self.widgets: [Widget] = []
         self.buttons = QGridLayout(self)
@@ -68,6 +71,21 @@ class ConnectionGrid(QGroupBox):
             yield Widget(key, create_button(key, name, self.on_click, on_ctrl_click=self.on_ctrl_click,
                                             on_enter=self.on_enter, on_leave=self.on_leave, link=link,
                                             get_location_name=self.get_location_name))
+
+    def show_double_connections(self):
+        w = QApplication.widgetAt(QCursor.pos(self.screen()))
+        if type(w) is EntranceButton:
+            if not self.double_information == w.key:
+                self.double_information = w.key
+                self.show_double(self.double_information)
+        else:
+            self.double_information = None
+            self.show_double(self.double_information)
+
+    def hide_double_connections(self):
+        if self.double_information is not None:
+            self.double_information = None
+            self.show_double(self.double_information)
 
 
 def get_link_of_button(key, links):

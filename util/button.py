@@ -74,6 +74,9 @@ class EntranceButton(QPushButton):
         if self.on_leave:
             self.on_leave(self.key)
 
+    def __repr__(self):
+        return f"<EntranceButton({self.key})>"
+
 
 def create_button(key, name, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
                   get_location_name=None):

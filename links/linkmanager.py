@@ -21,7 +21,8 @@ class LinkManager:
         return list(self._db.get(keys))
 
     def get_link(self, key):
-        return self._db.get_from_entrance(key)
+        if key is not None:
+            return self._db.get_from_entrance(key)
 
     def _check_valid_link(self, link):
         if link.entrance not in self.all_keys:

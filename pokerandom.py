@@ -1,9 +1,8 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout
 
 import widgets
 from links.link import Link
 from links.linkmanager import LinkManager
-from util.blocked import Blocked
 
 
 class PokeRandom(QWidget):
@@ -16,6 +15,7 @@ class PokeRandom(QWidget):
         self.entrances = entrances
 
         self._highlighting_entrances = []
+        self._shift = False
 
         self.locations = widgets.LocationGrid(
             locations, on_click=self.set_current_location, on_enter=self.show_connections,
@@ -24,7 +24,7 @@ class PokeRandom(QWidget):
         self.connections = widgets.ConnectionGrid(
             self.entrances, on_click=self.select_connection, on_ctrl_click=self._change_location_by_entrance,
             on_enter=self.show_connection, on_leave=self.hide_connection, get_location_name=self.get_name_of_location,
-            max_rows=10
+            view_double=self.show_double, max_rows=10
         )
         self.status = widgets.Status(self.selected, self.add_link, self.get_name_of_location)
         self.image = widgets.ImageViewer(max_height=800, max_width=800)
@@ -109,3 +109,22 @@ class PokeRandom(QWidget):
         shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway,
                                       self.status.blocked)
 
+    def show_double(self, key):
+        if key is None:
+            self.locations.hide_second_destinations()
+            return
+
+        initial_link = self.link_manager.get_link(key)
+        if initial_link is None:
+            return
+
+        destination = initial_link.other(key)
+        if destination is None:
+            return
+
+        location = self.get_location_of_entrance(destination)
+        destinations_of_destination = self.link_manager.get_links(self.entrances[location])
+        for link in destinations_of_destination:
+            loc = link.destination if self.get_location_of_entrance(link.entrance) == location else link.entrance
+
+            self.locations.show_second_destination(self.get_location_of_entrance(loc))
