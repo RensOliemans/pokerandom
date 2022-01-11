@@ -5,7 +5,7 @@ from PySide6.QtCore import QDir, Qt
 from PySide6.QtGui import QImageReader, QPixmap
 from PySide6.QtWidgets import QLabel
 
-from errors import ImageNotFoundError
+from util.errors import ImageNotFoundError
 
 
 class ImageViewer(QLabel):
