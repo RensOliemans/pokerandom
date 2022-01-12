@@ -34,8 +34,10 @@ class EntranceButton(QPushButton):
     def draw(self, active=False, selected=False):
         if selected:
             self.setToolTip('Click on another location to link it to this one.')
-            self.setPalette(colors.selected)
+            self.setStyleSheet('QWidget { text-decoration: underline; }')
+            self.setPalette(colors.existing_link)
         elif self.link is None:
+            self.setStyleSheet('')
             self.setPalette(colors.default)
         elif self.link.blocked:
             self.draw_blocked()
