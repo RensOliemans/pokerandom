@@ -35,17 +35,20 @@ class LocationGrid(QGroupBox):
         if key is None:
             return
 
-        for widget in self.widgets:
-            if widget.key == key:
-                widget.widget.setPalette(colors.linked)
+        widgets_to_change = [w for w in self.widgets if w.key == key]
+        for widget in widgets_to_change:
+            widget.widget.setPalette(colors.linked)
 
-    def hide_destination(self, key):
+    def hide_destination(self, key, exists=True):
         if key is None:
             return
 
-        for widget in self.widgets:
-            if widget.key == key:
+        widgets_to_change = [w for w in self.widgets if w.key == key]
+        for widget in widgets_to_change:
+            if exists:
                 widget.widget.setPalette(colors.existing_link)
+            else:
+                widget.widget.setPalette(colors.default)
 
     def show_second_destination(self, key):
         self.second_destinations.append(key)

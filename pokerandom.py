@@ -53,15 +53,20 @@ class PokeRandom(QWidget):
         self.locations.set_buttons(location, links, self.get_location_of_entrance)
         self.connections.set_buttons(location, links)
 
-    def _change_location_by_entrance(self, key):
-        location = self.get_location_of_entrance(key)
-        if location:
-            self.set_current_location(location)
-
     def select_connection(self, location):
         self.status.select_item(location)
 
     def add_link(self, entrance, destination, one_way=False, block=None):
+        self._hide_old_links(entrance, destination)
+        self._add_new_link(entrance, destination, one_way, block)
+
+    def _hide_old_links(self, entrance, destination):
+        links = self.link_manager.get_links_by_keys([entrance, destination])
+        for link in links:
+            self.hide_connection(link.entrance, exists=False)
+            self.hide_connection(link.destination, exists=False)
+
+    def _add_new_link(self, entrance, destination, one_way, block):
         self.link_manager.add_link(Link(entrance, destination, one_way, block))
         self.connections.set_buttons(self.current_location,
                                      self.link_manager.get_links(self.entrances[self.current_location]))
@@ -80,18 +85,16 @@ class PokeRandom(QWidget):
             logging.error('Could not find key %s, when I really expected it.', key)
 
     def show_connection(self, key):
-        link = self.link_manager.get_link(key)
-        if link:
-            destination = link.other(key)
-            self.locations.show_destination(self.get_location_of_entrance(destination))
-            self.connections.show_destination(destination)
+        destination = self._get_destination(key)
 
-    def hide_connection(self, key):
-        link = self.link_manager.get_link(key)
-        if link:
-            destination = link.other(key)
-            self.locations.hide_destination(self.get_location_of_entrance(destination))
-            self.connections.hide_destination(destination)
+        self.locations.show_destination(self.get_location_of_entrance(destination))
+        self.connections.show_destination(destination)
+
+    def hide_connection(self, key, exists=True):
+        destination = self._get_destination(key)
+
+        self.locations.hide_destination(self.get_location_of_entrance(destination), exists)
+        self.connections.hide_destination(destination)
 
     def show_connections(self, key):
         self._highlighting_entrances = self.link_manager.get_links(self.entrances[key])
@@ -132,3 +135,12 @@ class PokeRandom(QWidget):
             loc = link.destination if self.get_location_of_entrance(link.entrance) == location else link.entrance
 
             self.locations.show_second_destination(self.get_location_of_entrance(loc))
+
+    def _change_location_by_entrance(self, key):
+        location = self.get_location_of_entrance(key)
+        if location:
+            self.set_current_location(location)
+
+    def _get_destination(self, key):
+        link = self.link_manager.get_link(key)
+        return link.other(key) if link is not None else None

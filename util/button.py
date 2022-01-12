@@ -12,12 +12,13 @@ class EntranceButton(QPushButton):
         super().__init__(name)
         self.key = key
         self.link = link
+        self.on_click = on_click
         self.on_ctrl_click = on_ctrl_click
         self.on_enter = on_enter
         self.on_leave = on_leave
         self.get_location_name = get_location_name
 
-        self.clicked.connect(lambda: on_click(key))
+        self.clicked.connect(lambda: self.call(key))
         self.draw()
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
@@ -25,6 +26,10 @@ class EntranceButton(QPushButton):
             return self.on_ctrl_click(self.link.other(self.key))
 
         super().mousePressEvent(e)
+
+    def call(self, key):
+        self.on_leave(key)
+        self.on_click(key)
 
     def draw(self, active=False, selected=False):
         if selected:
