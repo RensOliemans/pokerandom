@@ -430,14 +430,14 @@ ENTRANCES = {
         ('solaceon_ruins_b2f_se', 'SR B2F SE'),
         ('solaceon_ruins_b2f_sw', 'SR B2F SW'),
  
-        ('solaceon_ruins_b3f_1_nw', 'SR B3F 1 NW'),
-        ('solaceon_ruins_b3f_1_ne', 'SR B3F 1 NE'),
-        ('solaceon_ruins_b3f_1_se', 'SR B3F 1 SE'),
-        ('solaceon_ruins_b3f_1_sw', 'SR B3F 1 SW'),
+        ('solaceon_ruins_b3f_a_nw', 'SR B3F A NW'),
+        ('solaceon_ruins_b3f_a_ne', 'SR B3F A NE'),
+        ('solaceon_ruins_b3f_a_se', 'SR B3F A SE'),
+        ('solaceon_ruins_b3f_a_sw', 'SR B3F A SW'),
 
-        ('solaceon_ruins_b3f_2_nw', 'SR B3F 2 NW'),
-        ('solaceon_ruins_b3f_2_se', 'SR B3F 2 SE'),
-        ('solaceon_ruins_b3f_2_sw', 'SR B3F 2 SW'),
+        ('solaceon_ruins_b3f_b_nw', 'SR B3F B NW'),
+        ('solaceon_ruins_b3f_b_se', 'SR B3F B SE'),
+        ('solaceon_ruins_b3f_b_sw', 'SR B3F B SW'),
 
         ('solaceon_ruins_b4f_nw', 'SR B4F NW'),
         ('solaceon_ruins_b4f_ne', 'SR B4F NE'),
