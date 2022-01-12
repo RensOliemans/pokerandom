@@ -7,29 +7,36 @@ from util.widget import Widget
 
 
 class LocationGrid(QGroupBox):
-    def __init__(self, elements, on_click, on_enter, on_leave, max_rows):
+    def __init__(self, elements, on_click, on_enter, on_leave, get_parent, max_rows):
         super().__init__()
 
         self.elements = elements
         self.on_click = on_click
         self.on_enter = on_enter
         self.on_leave = on_leave
+        self.get_parent = get_parent
         self.max_rows = max_rows
 
-        self.second_destinations = []
+        self.location = None
+        self.links = None
 
         self.widgets: [Widget] = []
         self.buttons = QGridLayout(self)
-        self.add_buttons()
+        self._add_buttons()
 
-    def add_buttons(self):
-        self.widgets = list(self._create_widgets())
-        columns = compute_cols(len(self.widgets), self.max_rows)
+    def change_location(self, location, links):
+        self.location = location
+        self.links = links
+        self.set_buttons()
 
-        division = divide_widgets_per_column(len(self.widgets), columns)
-        grid = create_grid(self.widgets, list(division))
-        for widget, (row, column) in grid:
-            self.buttons.addWidget(widget.widget, row, column)
+    def set_buttons(self):
+        self._clear_colors()
+        locations = [self.get_parent(link.entrance)
+                     if self.get_parent(link.destination) == self.location else self.get_parent(link.destination)
+                     for link in self.links]
+        for widget in self.widgets:
+            if widget.key in locations:
+                widget.widget.setPalette(colors.existing_link)
 
     def show_destination(self, key):
         if key is None:
@@ -39,35 +46,19 @@ class LocationGrid(QGroupBox):
         for widget in widgets_to_change:
             widget.widget.setPalette(colors.linked)
 
-    def hide_destination(self, key, exists=True):
-        if key is None:
-            return
-
-        widgets_to_change = [w for w in self.widgets if w.key == key]
-        for widget in widgets_to_change:
-            if exists:
-                widget.widget.setPalette(colors.existing_link)
-            else:
-                widget.widget.setPalette(colors.default)
-
     def show_second_destination(self, key):
-        self.second_destinations.append(key)
         self.show_destination(key)
 
-    def hide_second_destinations(self):
-        while self.second_destinations:
-            dest = self.second_destinations.pop()
-            self.hide_destination(dest, exists=False)
+    def _add_buttons(self):
+        self.widgets = list(self._create_widgets())
+        columns = compute_cols(len(self.widgets), self.max_rows)
 
-    def set_buttons(self, location, links, parent):
-        self.clear_colors()
-        locations = [parent(link.entrance) if parent(link.destination) == location else parent(link.destination)
-                     for link in links]
-        for widget in self.widgets:
-            if widget.key in locations:
-                widget.widget.setPalette(colors.existing_link)
+        division = divide_widgets_per_column(len(self.widgets), columns)
+        grid = create_grid(self.widgets, list(division))
+        for widget, (row, column) in grid:
+            self.buttons.addWidget(widget.widget, row, column)
 
-    def clear_colors(self):
+    def _clear_colors(self):
         for widget in self.widgets:
             widget.widget.setPalette(colors.default)
 

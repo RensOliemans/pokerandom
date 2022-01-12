@@ -20,7 +20,7 @@ class PokeRandom(QWidget):
 
         self.locations = widgets.LocationGrid(
             locations, on_click=self.set_current_location, on_enter=self.show_connections,
-            on_leave=self.hide_connections, max_rows=15
+            on_leave=self.hide_connections, get_parent=self.get_location_of_entrance, max_rows=15
         )
         self.connections = widgets.ConnectionGrid(
             self.entrances, on_click=self.select_connection, on_ctrl_click=self._change_location_by_entrance,
@@ -35,12 +35,14 @@ class PokeRandom(QWidget):
         self.setup_shortcuts()
 
         self.help = widgets.Help()
+        self.small_help = widgets.SmallHelp(self)
 
         self.left = QVBoxLayout()
         self.left.addWidget(self.locations)
         self.left.addWidget(self.connections)
 
         main_layout = QGridLayout(self)
+        main_layout.addWidget(self.small_help, 0, 0)
         main_layout.addLayout(self.left, 1, 0)
         main_layout.addWidget(self.status, 0, 1)
         main_layout.addWidget(self.image, 1, 1)
@@ -52,7 +54,7 @@ class PokeRandom(QWidget):
         self.current_location = location
         self.image.set_image(location)
         links = self.link_manager.get_links(self.entrances[location])
-        self.locations.set_buttons(location, links, self.get_location_of_entrance)
+        self.locations.change_location(location, links)
         self.connections.set_buttons(location, links)
 
     def select_connection(self, location):
@@ -65,8 +67,8 @@ class PokeRandom(QWidget):
     def _hide_old_links(self, entrance, destination):
         links = self.link_manager.get_links_by_keys([entrance, destination])
         for link in links:
-            self.hide_connection(link.entrance, exists=False)
-            self.hide_connection(link.destination, exists=False)
+            self.hide_connection(link.entrance)
+            self.hide_connection(link.destination)
 
     def _add_new_link(self, entrance, destination, one_way, block):
         self.link_manager.add_link(Link(entrance, destination, one_way, block))
@@ -92,10 +94,10 @@ class PokeRandom(QWidget):
         self.locations.show_destination(self.get_location_of_entrance(destination))
         self.connections.show_destination(destination)
 
-    def hide_connection(self, key, exists=True):
+    def hide_connection(self, key):
         destination = self._get_destination(key)
 
-        self.locations.hide_destination(self.get_location_of_entrance(destination), exists)
+        self.locations.set_buttons()
         self.connections.hide_destination(destination)
 
     def show_connections(self, key):
@@ -120,7 +122,7 @@ class PokeRandom(QWidget):
 
     def show_double(self, key):
         if key is None:
-            self.locations.hide_second_destinations()
+            self.locations.set_buttons()
             return
 
         initial_link = self.link_manager.get_link(key)
