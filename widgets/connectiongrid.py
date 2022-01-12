@@ -68,9 +68,16 @@ class ConnectionGrid(QGroupBox):
         elements = self.elements[location]
         for key, name in elements:
             link = get_link_of_button(key, links)
+            name = self._create_name(key, name, link)
             yield Widget(key, create_button(key, name, self.on_click, on_ctrl_click=self.on_ctrl_click,
                                             on_enter=self.on_enter, on_leave=self.on_leave, link=link,
                                             get_location_name=self.get_location_name))
+
+    def _create_name(self, key, name, link):
+        if not link or link.blocked:
+            return name
+
+        return f'{name} -> {self.get_location_name(link.other(key))}'
 
     def show_double_connections(self):
         w = QApplication.widgetAt(QCursor.pos(self.screen()))
