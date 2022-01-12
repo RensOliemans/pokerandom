@@ -30,7 +30,7 @@ class LinkManager:
     def _check_valid_link(self, link):
         if link.entrance not in self.all_keys:
             raise ValueError(f'{link.entrance} not in the known locations.')
-        if not link.blocked and link.destination not in self.all_keys:
+        if not link.note and not link.blocked and link.destination not in self.all_keys:
             raise ValueError(f'{link.destination} not in the known locations.')
 
 

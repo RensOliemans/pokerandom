@@ -7,7 +7,7 @@ from util.blocked import Blocked
 
 
 class EntranceButton(QPushButton):
-    def __init__(self, name, key, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
+    def __init__(self, key, name, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
                  get_location_name=None):
         super().__init__(name)
         self.key = key
@@ -43,6 +43,8 @@ class EntranceButton(QPushButton):
             self.draw_blocked()
         elif active:
             self.setPalette(colors.linked)
+        elif self.link.has_note:
+            self.setPalette(colors.note)
         else:
             self.setToolTip(self.get_location_name(self.link.other(self.key)))
             self.setPalette(colors.existing_link)
@@ -87,4 +89,4 @@ class EntranceButton(QPushButton):
 
 def create_button(key, name, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
                   get_location_name=None):
-    return EntranceButton(name, key, on_click, on_ctrl_click, on_enter, on_leave, link, get_location_name)
+    return EntranceButton(key, name, on_click, on_ctrl_click, on_enter, on_leave, link, get_location_name)

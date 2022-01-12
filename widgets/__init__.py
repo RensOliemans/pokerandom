@@ -1,3 +1,4 @@
+from widgets.note import Note
 from widgets.status import Status
 from widgets.imageviewer import ImageViewer
 from widgets.connectiongrid import ConnectionGrid

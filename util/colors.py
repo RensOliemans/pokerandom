@@ -5,6 +5,7 @@ from PySide6.QtGui import QColor, QPalette
 default = QPalette()
 existing_link = QPalette(QColor('#9EE5DD'))
 linked = QPalette(QColor('#2A9D8F'))
+note = QPalette(QColor('#F1C8DB'))
 
 dead_end = QPalette(QColor('#B5ACC3'))
 cut = QPalette(QColor('#ff1500'))

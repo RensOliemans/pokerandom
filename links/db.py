@@ -10,8 +10,8 @@ class Db:
 
     def insert(self, link: Link):
         block = link.block.value if link.block is not None else None
-        self._cursor.execute("INSERT INTO link VALUES (?, ?, ?, ?)",
-                             (link.entrance, link.destination, link.one_way, block))
+        self._cursor.execute("INSERT INTO link VALUES (?, ?, ?, ?, ?)",
+                             (link.entrance, link.destination, link.one_way, block, link.note))
 
     def get(self, locations=None):
         if locations is None:
@@ -46,7 +46,9 @@ class Db:
     def _convert(element):
         block = element[3]
         block = Blocked(int(block)) if block is not None else None
-        return Link(element[0], element[1], element[2], block)
+        note = element[4]
+        note = note if note is not None else None
+        return Link(element[0], element[1], element[2], block, note)
 
     def __enter__(self):
         self._conn = sqlite3.connect(self._database, isolation_level=None)

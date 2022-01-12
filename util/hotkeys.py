@@ -2,6 +2,7 @@ from PySide6.QtGui import QKeySequence
 
 HELP = [QKeySequence.HelpContents, '?']
 
+MAP_NOTE = ['`']
 CANCEL = [QKeySequence.Cancel, 'q']
 ONE_WAY = ['1']
 DEAD_END = ['d']

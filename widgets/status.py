@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QLabel, QGroupBox, QGridLayout
+from PySide6.QtWidgets import QLabel, QGroupBox, QGridLayout, QVBoxLayout, QTextEdit
+
+from widgets import Note
 
 
 class Status(QGroupBox):
@@ -12,14 +14,14 @@ class Status(QGroupBox):
         self.get_name_of_location = get_name_of_location
 
         self.entrance_widget = QLabel('Select a location')
-        self.destination_widget = QLabel('')
+        self.note = Note(self, self.save_note)
         self.one_way_widget = QLabel('')
 
         self.layout = QGridLayout(self)
 
         self.layout.addWidget(self.entrance_widget, 0, 0)
-        self.layout.addWidget(self.one_way_widget, 1, 1)
-        self.layout.addWidget(self.destination_widget, 0, 1)
+        self.layout.addWidget(self.one_way_widget, 1, 0)
+        self.layout.addWidget(self.note, 0, 1)
 
     def select_item(self, key):
         if self.entrance is None:
@@ -33,6 +35,8 @@ class Status(QGroupBox):
 
     def cancel(self):
         self.entrance = None
+        self.one_way = False
+        self.note.clearFocus()
 
     def oneway(self):
         self.one_way = not self.one_way
@@ -43,6 +47,19 @@ class Status(QGroupBox):
         else:
             self.add_link_callback(self.entrance, destination=None, one_way=False, block=block)
             self.entrance = None
+
+    def show_note(self):
+        self.note.setFocus()
+
+    def save_note(self, note):
+        if self.entrance is None:
+            return
+
+        self.save(note=note)
+
+    def save(self, destination=None, one_way=False, block=None, note=None):
+        self.add_link_callback(self.entrance, destination, one_way=one_way, block=block, note=note)
+        self.cancel()
 
     @property
     def one_way(self):

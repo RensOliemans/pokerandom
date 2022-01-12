@@ -60,9 +60,9 @@ class PokeRandom(QWidget):
     def select_connection(self, location):
         self.status.select_item(location)
 
-    def add_link(self, entrance, destination, one_way=False, block=None):
+    def add_link(self, entrance, destination, one_way=False, block=None, note=None):
         self._hide_old_links(entrance, destination)
-        self._add_new_link(entrance, destination, one_way, block)
+        self._add_new_link(entrance, destination, one_way, block, note)
 
     def _hide_old_links(self, entrance, destination):
         links = self.link_manager.get_links_by_keys([entrance, destination])
@@ -70,8 +70,8 @@ class PokeRandom(QWidget):
             self.hide_connection(link.entrance)
             self.hide_connection(link.destination)
 
-    def _add_new_link(self, entrance, destination, one_way, block):
-        self.link_manager.add_link(Link(entrance, destination, one_way, block))
+    def _add_new_link(self, entrance, destination, one_way, block, note):
+        self.link_manager.add_link(Link(entrance, destination, one_way, block, note))
         self.connections.set_buttons(self.current_location,
                                      self.link_manager.get_links(self.entrances[self.current_location]))
 
@@ -117,7 +117,7 @@ class PokeRandom(QWidget):
         self.connections.show_selected(key, selected)
 
     def setup_shortcuts(self):
-        shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway,
+        shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway, self.status.show_note,
                                       self.status.blocked, self.show_help)
 
     def show_double(self, key):

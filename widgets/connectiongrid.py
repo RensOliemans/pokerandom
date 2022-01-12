@@ -1,5 +1,5 @@
 from PySide6.QtGui import QCursor
-from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication, QLabel, QHBoxLayout
 
 from util.button import create_button, EntranceButton
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
@@ -76,6 +76,9 @@ class ConnectionGrid(QGroupBox):
     def _create_name(self, key, name, link):
         if not link or link.blocked:
             return name
+
+        if link.has_note:
+            return f'{name} — {link.note}'
 
         return f'{name} -> {self.get_location_name(link.other(key))}'
 
