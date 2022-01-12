@@ -57,7 +57,7 @@ class LocationGrid(QGroupBox):
     def hide_second_destinations(self):
         while self.second_destinations:
             dest = self.second_destinations.pop()
-            self.hide_destination(dest)
+            self.hide_destination(dest, exists=False)
 
     def set_buttons(self, location, links, parent):
         self.clear_colors()
