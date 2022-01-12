@@ -5,10 +5,10 @@ from util.blocked import Blocked
 
 
 class Shortcuts:
-    def __init__(self, parent, cancel, one_way, blocked, toggle_help):
+    def __init__(self, parent, cancel, one_way, blocked, show_help):
         self.parent = parent
 
-        self._add_shortcuts(hotkeys.HELP, toggle_help)
+        self._add_shortcuts(hotkeys.HELP, show_help)
 
         dead_end = lambda: blocked(Blocked.DEAD_END)
         cut = lambda: blocked(Blocked.CUT)

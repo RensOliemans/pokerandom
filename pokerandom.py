@@ -35,7 +35,6 @@ class PokeRandom(QWidget):
         self.setup_shortcuts()
 
         self.help = widgets.Help()
-        self.help.visible = False
 
         self.left = QVBoxLayout()
         self.left.addWidget(self.locations)
@@ -45,8 +44,6 @@ class PokeRandom(QWidget):
         main_layout.addLayout(self.left, 1, 0)
         main_layout.addWidget(self.status, 0, 1)
         main_layout.addWidget(self.image, 1, 1)
-
-        main_layout.addWidget(self.help, 0, 0)
 
     def setVisible(self, visible):
         super(PokeRandom, self).setVisible(visible)
@@ -119,7 +116,7 @@ class PokeRandom(QWidget):
 
     def setup_shortcuts(self):
         shortcuts = widgets.Shortcuts(self, self.status.cancel, self.status.oneway,
-                                      self.status.blocked, self.toggle_help)
+                                      self.status.blocked, self.show_help)
 
     def show_double(self, key):
         if key is None:
@@ -150,5 +147,5 @@ class PokeRandom(QWidget):
         link = self.link_manager.get_link(key)
         return link.other(key) if link is not None else None
 
-    def toggle_help(self):
-        self.help.visible = not self.help.visible
+    def show_help(self):
+        self.help.show()

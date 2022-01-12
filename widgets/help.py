@@ -5,8 +5,6 @@ class Help(QDialog):
     def __init__(self):
         super().__init__()
 
-        self._visible = False
-
         tab_widget = QTabWidget()
         tab_widget.addTab(HelpTab(self), "Help")
         tab_widget.addTab(HotkeyTab(self), "Hotkey settings")
@@ -15,15 +13,6 @@ class Help(QDialog):
         main_layout.addWidget(tab_widget)
         self.setLayout(main_layout)
         self.setWindowTitle("Help")
-
-    @property
-    def visible(self):
-        return self._visible
-
-    @visible.setter
-    def visible(self, value):
-        self.setVisible(value)
-        self._visible = value
 
 
 class HelpTab(QWidget):
