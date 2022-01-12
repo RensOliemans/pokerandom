@@ -20,10 +20,9 @@ if __name__ == '__main__':
     QCoreApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
     app = QApplication()
     with Db(database) as db:
-        print(app.queryKeyboardModifiers())
         pokerandom = PokeRandom(locations=LOCATIONS, initial_location=LOCATIONS['cities'][0],
                                 entrances=ENTRANCES, db=db)
-        timer = connect_shift(app, pokerandom,
+        timer = connect_shift(app,
                               pokerandom.connections.show_double_connections,
                               pokerandom.connections.hide_double_connections)
         pokerandom.show()

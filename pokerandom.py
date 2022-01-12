@@ -1,3 +1,5 @@
+import logging
+
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout
 
 import widgets
@@ -15,7 +17,6 @@ class PokeRandom(QWidget):
         self.entrances = entrances
 
         self._highlighting_entrances = []
-        self._shift = False
 
         self.locations = widgets.LocationGrid(
             locations, on_click=self.set_current_location, on_enter=self.show_connections,
@@ -73,7 +74,10 @@ class PokeRandom(QWidget):
     def get_name_of_location(self, key):
         all_entrances = [self.entrances[x] for x in self.entrances.keys()]
         flattened = [i for sub in all_entrances for i in sub]
-        return [x[1] for x in flattened if key == x[0]][0]
+        try:
+            return [x[1] for x in flattened if key == x[0]][0]
+        except IndexError:
+            logging.error('Could not find key %s, when I really expected it.', key)
 
     def show_connection(self, key):
         link = self.link_manager.get_link(key)

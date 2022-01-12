@@ -3,7 +3,7 @@ from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QApplication
 
 
-def connect_shift(qapp: QApplication, poke, down, up):
+def connect_shift(qapp: QApplication, down, up):
     timer = QTimer(qapp)
     timer.timeout.connect(lambda: check_for_shift(qapp, down, up))
     timer.start(100)
