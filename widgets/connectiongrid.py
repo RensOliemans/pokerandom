@@ -1,5 +1,5 @@
 from PySide6.QtGui import QCursor
-from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication, QLabel, QHBoxLayout
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication
 
 from util.button import create_button, EntranceButton
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid

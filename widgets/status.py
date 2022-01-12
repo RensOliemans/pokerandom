@@ -29,9 +29,7 @@ class Status(QGroupBox):
         elif self.entrance == key:
             return
         else:
-            self.add_link_callback(self.entrance, key, self._one_way)
-            self.entrance = None
-            self.one_way = False
+            self.save(destination=key, one_way=self.one_way)
 
     def cancel(self):
         self.entrance = None
@@ -45,8 +43,7 @@ class Status(QGroupBox):
         if self.entrance is None:
             return
         else:
-            self.add_link_callback(self.entrance, destination=None, one_way=False, block=block)
-            self.entrance = None
+            self.save(block=block)
 
     def show_note(self):
         self.note.setFocus()
@@ -57,7 +54,7 @@ class Status(QGroupBox):
 
         self.save(note=note)
 
-    def save(self, destination=None, one_way=False, block=None, note=None):
+    def save(self, *, destination=None, one_way=False, block=None, note=None):
         self.add_link_callback(self.entrance, destination, one_way=one_way, block=block, note=note)
         self.cancel()
 

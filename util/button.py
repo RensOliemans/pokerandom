@@ -2,7 +2,7 @@ from PySide6.QtCore import QEvent
 from PySide6.QtGui import QEnterEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import QPushButton
 
-from util import colors
+from util import colors, stylesheets, tooltips
 from util.blocked import Blocked
 
 
@@ -33,47 +33,49 @@ class EntranceButton(QPushButton):
 
     def draw(self, active=False, selected=False):
         if selected:
-            self.setToolTip('Click on another location to link it to this one.')
-            self.setStyleSheet('QWidget { text-decoration: underline; }')
-            self.setPalette(colors.existing_link)
+            self.change_color(colors.existing_link, stylesheet=stylesheets.selected,
+                              tooltip='Click on another location to link it to this one.')
         elif self.link is None:
-            self.setStyleSheet('')
-            self.setPalette(colors.default)
+            self.change_color(colors.default)
         elif self.link.blocked:
             self.draw_blocked()
         elif active:
-            self.setPalette(colors.linked)
+            self.change_color(colors.linked)
         elif self.link.has_note:
-            self.setPalette(colors.note)
+            self.change_color(colors.note)
         else:
-            self.setToolTip(self.get_location_name(self.link.other(self.key)))
-            self.setPalette(colors.existing_link)
+            self.change_color(colors.existing_link, tooltip=self.get_location_name(self.link.other(self.key)))
 
     def draw_blocked(self):
         if self.link.dead_end:
-            self.setToolTip(f'Dead end')
-            self.setStyleSheet('QWidget { text-decoration: line-through; }')
-            self.setPalette(colors.dead_end)
+            self.change_color(colors.dead_end, stylesheet=stylesheets.blocked, tooltip='Dead end')
             return
 
         block = self.link.block
+        color = None
         if block == Blocked.CUT:
-            self.setPalette(colors.cut)
+            color = colors.cut
         elif block == Blocked.ROCK_SMASH:
-            self.setPalette(colors.rock_smash)
+            color = colors.rock_smash
         elif block == Blocked.STRENGTH:
-            self.setPalette(colors.strength)
+            color = colors.strength
         elif block == Blocked.SURF:
-            self.setPalette(colors.surf)
+            color = colors.surf
         elif block == Blocked.WATERFALL:
-            self.setPalette(colors.waterfall)
+            color = colors.waterfall
         elif block == Blocked.ROCK_CLIMB:
-            self.setPalette(colors.rock_climb)
+            color = colors.rock_climb
         elif block == Blocked.TRAINER:
-            self.setPalette(colors.trainer)
+            color = colors.trainer
         elif block == Blocked.EVENT:
-            self.setPalette(colors.event)
-        self.setToolTip(f'Blocked by {block}')
+            color = colors.event
+        self.change_color(color, tooltip=f'Blocked by {block}')
+
+    def change_color(self, color, *, stylesheet=None, tooltip=None):
+        self.setStyleSheet('' if stylesheet is None else stylesheet)
+        self.setPalette(color)
+        if tooltip:
+            self.setToolTip(tooltip)
 
     def enterEvent(self, event: QEnterEvent) -> None:
         if self.on_enter:
