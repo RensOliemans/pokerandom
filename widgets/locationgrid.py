@@ -45,9 +45,6 @@ class LocationGrid(QGroupBox):
         for widget in widgets_to_change:
             widget.widget.setPalette(colors.linked)
 
-    def show_second_destination(self, key):
-        self.show_destination(key)
-
     def _add_buttons(self):
         self.widgets = list(self._create_widgets())
         columns = compute_cols(len(self.widgets), self.max_rows)

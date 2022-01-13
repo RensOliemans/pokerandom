@@ -129,13 +129,12 @@ class PokeRandom(QWidget):
         if destination is None:
             return
 
-        category = self.get_category_of_entrance(destination)
         location = self.get_location_of_entrance(destination)
         destinations_of_destination = self.link_manager.get_links(self.get_entrances_of_location(location.key))
         for link in destinations_of_destination:
             loc = link.destination if self.get_location_of_entrance(link.entrance) == location else link.entrance
 
-            self.locations.show_second_destination(self.get_category_of_entrance(loc))
+            self.locations.show_destination(self.get_category_of_entrance(loc))
 
     def _change_location_by_entrance(self, key):
         location = self.get_category_of_entrance(key)
