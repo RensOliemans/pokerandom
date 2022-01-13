@@ -388,19 +388,19 @@ CATEGORIES = [
             Entrance('jubilife_tv_4f_down', 'TV 4F Down'),
         ]),
     ]),
-    Category('department_store', 'Department Store', [
-        Location('department_store', 'Department Store', [
-            Entrance('department_store_b1f_up', 'Store B1F Up'),
-            Entrance('department_store_1f_up', 'Store 1F Up'),
-            Entrance('department_store_1f_down', 'Store 1F Down'),
-            Entrance('department_store_1f_exit', 'Store 1F Exit'),
-            Entrance('department_store_2f_up', 'Store 2F Up'),
-            Entrance('department_store_2f_down', 'Store 2F Down'),
-            Entrance('department_store_3f_up', 'Store 3F Up'),
-            Entrance('department_store_3f_down', 'Store 3F Down'),
-            Entrance('department_store_4f_up', 'Store 4F Up'),
-            Entrance('department_store_4f_down', 'Store 4F Down'),
-            Entrance('department_store_5f_down', 'Store 5F Down'),
+    Category('store', 'Department Store', [
+        Location('store', 'Department Store', [
+            Entrance('store_b1f_up', 'Store B1F Up'),
+            Entrance('store_1f_up', 'Store 1F Up'),
+            Entrance('store_1f_down', 'Store 1F Down'),
+            Entrance('store_1f_exit', 'Store 1F Exit'),
+            Entrance('store_2f_up', 'Store 2F Up'),
+            Entrance('store_2f_down', 'Store 2F Down'),
+            Entrance('store_3f_up', 'Store 3F Up'),
+            Entrance('store_3f_down', 'Store 3F Down'),
+            Entrance('store_4f_up', 'Store 4F Up'),
+            Entrance('store_4f_down', 'Store 4F Down'),
+            Entrance('store_5f_down', 'Store 5F Down'),
         ]),
     ]),
     Category('pokemansion', 'Pokémansion', [
@@ -612,6 +612,7 @@ CATEGORIES = [
             Entrance('victory_road_1f_e_stairs', 'VR 1F E Stairs'),
             Entrance('victory_road_1f_se_stairs', 'VR 1F SE Stairs'),
             Entrance('victory_road_1f_north_exit', 'VR 1F North Exit'),
+            Entrance('victory_road_1f_east_exit', 'VR 1F East Exit'),
             Entrance('victory_road_1f_south_exit', 'VR 1F South Exit'),
         ]),
         Location('victory_road_b1f', 'Victory Road B1F', [
