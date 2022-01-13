@@ -53,27 +53,19 @@ class PokeRandom(QWidget):
     def set_current_location(self, location):
         self.current_location = location
         self.image.set_image(location)
-        links = self.link_manager.get_links(self.entrances[location])
-        self.locations.change_location(location, links)
-        self.connections.set_buttons(location, links)
+        self.redraw_location()
+
+    def redraw_location(self):
+        links = self.link_manager.get_links(self.entrances[self.current_location])
+        self.locations.change_location(self.current_location, links)
+        self.connections.set_buttons(self.current_location, links)
 
     def select_connection(self, location):
         self.status.select_item(location)
 
     def add_link(self, entrance, destination, one_way=False, block=None, note=None):
-        self._hide_old_links(entrance, destination)
-        self._add_new_link(entrance, destination, one_way, block, note)
-
-    def _hide_old_links(self, entrance, destination):
-        links = self.link_manager.get_links_by_keys([entrance, destination])
-        for link in links:
-            self.hide_connection(link.entrance)
-            self.hide_connection(link.destination)
-
-    def _add_new_link(self, entrance, destination, one_way, block, note):
         self.link_manager.add_link(Link(entrance, destination, one_way, block, note))
-        self.connections.set_buttons(self.current_location,
-                                     self.link_manager.get_links(self.entrances[self.current_location]))
+        self.redraw_location()
 
     def get_location_of_entrance(self, key):
         for category, entrances in self.entrances.items():

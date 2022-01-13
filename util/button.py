@@ -2,7 +2,7 @@ from PySide6.QtCore import QEvent
 from PySide6.QtGui import QEnterEvent, QMouseEvent, Qt
 from PySide6.QtWidgets import QPushButton
 
-from util import colors, stylesheets, tooltips
+from util import colors, stylesheets
 from util.blocked import Blocked
 
 

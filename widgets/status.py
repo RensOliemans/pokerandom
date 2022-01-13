@@ -53,6 +53,7 @@ class Status(QGroupBox):
             return
 
         self.save(note=note)
+        self.note.clear()
 
     def save(self, *, destination=None, one_way=False, block=None, note=None):
         self.add_link_callback(self.entrance, destination, one_way=one_way, block=block, note=note)
