@@ -42,7 +42,7 @@ class EntranceButton(QPushButton):
         elif self.link.has_note:
             self.change_color(colors.note)
         else:
-            self.change_color(colors.existing_link, tooltip=self.link.other(self.entrance.key))
+            self.change_color(colors.existing_link, tooltip='Click to remap, Ctrl+click to go to destination.')
 
     def draw_blocked(self):
         if self.link.dead_end:

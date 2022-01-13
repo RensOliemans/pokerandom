@@ -143,12 +143,11 @@ CATEGORIES = [
     Category('sandgem_jubilife', 'Sandgem/Jubilife', [
         Location('sandgem_jubilife', 'Sandgem/Jubilife', [
             Entrance('verity_lakefront', 'Verity Lakefront'),
+            Entrance('sandgem_pokecenter', 'Sandgem Pokécenter'),
+            Entrance('sandgem_mart', 'Sandgem Mart'),
             Entrance('sandgem_sw', 'Sandgem SW'),
             Entrance('sandgem_s', 'Sandgem S'),
-            Entrance('sandgem_mart', 'Sandgem Mart'),
-            Entrance('sandgem_pokecenter', 'Sandgem Pokécenter'),
             Entrance('jubilife_pokecenter', 'Jubilife Pokécenter'),
-            Entrance('jubilife_trainer_school', 'Jubilife Trainer School'),
             Entrance('jubilife_mart', 'Jubilife Mart'),
             Entrance('jubilife_s', 'Jubilife S'),
             Entrance('jubilife_sw', 'Jubilife SW'),
@@ -164,9 +163,9 @@ CATEGORIES = [
     ]),
     Category('oreburgh', 'Oreburgh', [
         Location('oreburgh', 'Oreburgh', [
-            Entrance('oreburgh_gym', 'Oreburgh Gym'),
-            Entrance('oreburgh_mart', 'Oreburgh Mart'),
             Entrance('oreburgh_pokecenter', 'Oreburgh Pokécenter'),
+            Entrance('oreburgh_mart', 'Oreburgh Mart'),
+            Entrance('oreburgh_gym', 'Oreburgh Gym'),
             Entrance('oreburgh_fossil_lab', 'Oreburgh Fossil Lab'),
             Entrance('oreburgh_mine', 'Oreburgh Mine'),
             Entrance('oreburgh_apartment_nw', 'Oreburgh Apartment NW'),
@@ -191,14 +190,16 @@ CATEGORIES = [
             Entrance('floaroma_se', 'Floaroma SE'),
             Entrance('floaroma_ravaged_path', 'Floaroma Ravaged Path'),
             Entrance('floaroma_meadow_entrance_floaroma', 'Meadow Entrance Floaroma'),
-            Entrance('floaroma_meadow_exit_house', 'Meadow House'),
-            Entrance('floaroma_meadow_exit_n', 'Meadow Exit N'),
-            Entrance('floaroma_meadow_exit_s', 'Meadow Exit S'),
             Entrance('r205_ironworks', 'R205 Ironworks'),
             Entrance('floaroma_meadow_entrance_iron', 'R205 Meadow Entrance'),
             Entrance('r205_windworks', 'R205 Windworks'),
             Entrance('r205_eterna_forest', 'R205 Eterna Forest'),
             Entrance('r205_house', 'R205 House'),
+        ]),
+        Location('meadow', 'Floaroma Meadow', [
+            Entrance('floaroma_meadow_exit_house', 'Meadow House'),
+            Entrance('floaroma_meadow_exit_n', 'Meadow Exit N'),
+            Entrance('floaroma_meadow_exit_s', 'Meadow Exit S'),
         ]),
     ]),
     Category('eterna', 'Eterna', [
@@ -277,7 +278,6 @@ CATEGORIES = [
             Entrance('pastoria_pokecenter', 'Pastoria Pokecenter'),
             Entrance('pastoria_mart', 'Pastoria Mart'),
             Entrance('pastoria_gym', 'Pastoria Gym'),
-            Entrance('pastoria_great_marsh', 'Pastoria Great Marsh'),
             Entrance('pastoria_house_ne', 'Pastoria House NE'),
             Entrance('pastoria_house_se', 'Pastoria House SE'),
             Entrance('pastoria_house_sw', 'Pastoria House SW'),
@@ -309,6 +309,7 @@ CATEGORIES = [
             Entrance('canalave_library', 'Canalave Library'),
             Entrance('canalave_house_e', 'Canalave House E'),
             Entrance('canalave_house_se', 'Canalave House SE'),
+            Entrance('canalave_house_ne', 'Canalave House NE'),
             Entrance('canalave_house_w', 'Canalave House W'),
             Entrance('canalave_house_sw', 'Canalave House SW'),
             Entrance('canalave_east_exit', 'Canalave East Exit'),
@@ -344,16 +345,19 @@ CATEGORIES = [
         ]),
     ]),
     Category('fight_resort', 'Fight/Resort', [
-        Location('fight_resort', 'Fight/Resort', [
+        Location('fight_area', 'Fight Area', [
             Entrance('fight_area_pokecenter', 'Fight Area Pokecenter'),
             Entrance('fight_area_mart', 'Fight Area Mart'),
             Entrance('fight_area_s_house', 'Fight Area S House'),
             Entrance('fight_area_c_house', 'Fight Area C House'),
             Entrance('fight_area_north_exit', 'Fight Area North Exit'),
+        ]),
+        Location('resort_area', 'Resort Area', [
             Entrance('resort_area_pokecenter', 'Resort Area Pokecenter'),
             Entrance('resort_agroup-locations-together-that-you-can-reachrea_villa', 'Resort Area Villa'),
             Entrance('resort_area_ribbon_syndicate', 'Resort Area Ribbon Syndicate'),
             Entrance('resort_area_house', 'Resort Area House'),
+            Entrance('r228_cave', 'R228 Cave'),
             Entrance('r228_s_house', 'R228 S House'),
             Entrance('r228_c_house', 'R228 C House'),
             Entrance('r228_north_exit', 'R228 North Exit'),
@@ -401,18 +405,6 @@ CATEGORIES = [
             Entrance('store_4f_up', 'Store 4F Up'),
             Entrance('store_4f_down', 'Store 4F Down'),
             Entrance('store_5f_down', 'Store 5F Down'),
-        ]),
-    ]),
-    Category('pokemansion', 'Pokémansion', [
-        Location('pokemansion', 'Pokémansion', [
-            Entrance('poke_mansion_s', 'Pokémansion S'),
-            Entrance('poke_mansion_w', 'Pokémansion W'),
-            Entrance('poke_mansion_e', 'Pokémansion E'),
-            Entrance('poke_mansion_n', 'Pokémansion N'),
-            Entrance('poke_mansion_room_1', 'Pokémansion Room 1'),
-            Entrance('poke_mansion_room_2', 'Pokémansion Room 2'),
-            Entrance('poke_mansion_room_3', 'Pokémansion Room 3'),
-            Entrance('poke_mansion_room_4', 'Pokémansion Room 4'),
         ]),
     ]),
     Category('galactic_eterna', 'Galactic Eterna', [
@@ -471,6 +463,18 @@ CATEGORIES = [
             Entrance('galactic_hq_4f_warp_n', 'HQ 4F Warp N'),
             Entrance('galactic_hq_4f_warp_ne', 'HQ 4F Warp NE'),
             Entrance('galactic_hq_4f_warp_se', 'HQ 4F Warp SE'),
+        ]),
+    ]),
+    Category('pokemansion', 'Pokémansion', [
+        Location('pokemansion', 'Pokémansion', [
+            Entrance('poke_mansion_n', 'Pokémansion N'),
+            Entrance('poke_mansion_e', 'Pokémansion E'),
+            Entrance('poke_mansion_s', 'Pokémansion S'),
+            Entrance('poke_mansion_w', 'Pokémansion W'),
+            Entrance('poke_mansion_room_1', 'Pokémansion Room 1'),
+            Entrance('poke_mansion_room_2', 'Pokémansion Room 2'),
+            Entrance('poke_mansion_room_3', 'Pokémansion Room 3'),
+            Entrance('poke_mansion_room_4', 'Pokémansion Room 4'),
         ]),
     ]),
     Category('old_chateau', 'Old Chateau', [
@@ -552,7 +556,6 @@ CATEGORIES = [
         ]),
         Location('r214_hotel_222', 'R214/222/Hotel', [
             Entrance('r214_maniac_tunnel', 'R214 Maniac Tunnel'),
-            Entrance('r214_sendoff_spring', 'R214 Sendoff Spring'),
             Entrance('r214_north_exit', 'R214 North Exit'),
             Entrance('valor_lakefront', 'Valor Lakefront'),
             Entrance('hotel_grand_lake_nw', 'Hotel Grand Lake NW'),
