@@ -1,14 +1,14 @@
 from links.db import Db
 from links.link import Link
+from util.locations import Category
 
 
 class LinkManager:
-    def __init__(self, locations, entrances, database: Db):
-        self.locations = locations
-        self.entrances = entrances
+    def __init__(self, categories, database: Db):
+        self.categories = categories
 
-        self.all_locations = flatten_dict(self.entrances)
-        self.all_keys = {x[0] for x in self.all_locations}
+        self.all_locations = flatten_dict(self.categories)
+        self.all_keys = {x.key for x in self.all_locations}
         self._db = database
 
     def add_link(self, link: Link):
@@ -34,6 +34,6 @@ class LinkManager:
             raise ValueError(f'{link.destination} not in the known locations.')
 
 
-def flatten_dict(d):
-    sublists = [d[x] for x in d.keys()]
-    return {i for sub in sublists for i in sub}
+def flatten_dict(d: [Category]):
+    entrances = [loc.entrances for sub in d for loc in sub.locations]
+    return {i for sub in entrances for i in sub}

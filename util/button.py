@@ -7,29 +7,27 @@ from util.blocked import Blocked
 
 
 class EntranceButton(QPushButton):
-    def __init__(self, key, name, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
-                 get_location_name=None):
-        super().__init__(name)
-        self.key = key
+    def __init__(self, entrance, on_click, on_ctrl_click=None, on_enter=None, on_leave=None, link=None, text=None):
+        super().__init__(text or entrance.name)
+        self.entrance = entrance
         self.link = link
         self.on_click = on_click
         self.on_ctrl_click = on_ctrl_click
         self.on_enter = on_enter
         self.on_leave = on_leave
-        self.get_location_name = get_location_name
 
-        self.clicked.connect(lambda: self.call(key))
+        self.clicked.connect(lambda: self.call(entrance))
         self.draw()
 
     def mousePressEvent(self, e: QMouseEvent) -> None:
         if e.modifiers() == Qt.ControlModifier and self.on_ctrl_click is not None:
-            return self.on_ctrl_click(self.link.other(self.key))
+            return self.on_ctrl_click(self.link.other(self.entrance.key))
 
         super().mousePressEvent(e)
 
-    def call(self, key):
-        self.on_leave(key)
-        self.on_click(key)
+    def call(self, entrance):
+        self.on_leave(entrance)
+        self.on_click(entrance)
 
     def draw(self, active=False, selected=False):
         if selected:
@@ -44,7 +42,7 @@ class EntranceButton(QPushButton):
         elif self.link.has_note:
             self.change_color(colors.note)
         else:
-            self.change_color(colors.existing_link, tooltip=self.get_location_name(self.link.other(self.key)))
+            self.change_color(colors.existing_link, tooltip=self.link.other(self.entrance.key))
 
     def draw_blocked(self):
         if self.link.dead_end:
@@ -79,16 +77,15 @@ class EntranceButton(QPushButton):
 
     def enterEvent(self, event: QEnterEvent) -> None:
         if self.on_enter:
-            self.on_enter(self.key)
+            self.on_enter(self.entrance)
 
     def leaveEvent(self, event: QEvent) -> None:
         if self.on_leave:
-            self.on_leave(self.key)
+            self.on_leave(self.entrance)
 
     def __repr__(self):
-        return f"<EntranceButton({self.key})>"
+        return f"<EntranceButton({self.entrance})>"
 
 
-def create_button(key, name, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None,
-                  get_location_name=None):
-    return EntranceButton(key, name, on_click, on_ctrl_click, on_enter, on_leave, link, get_location_name)
+def create_button(entrance, on_click, *, on_ctrl_click=None, on_enter=None, on_leave=None, link=None, text=None):
+    return EntranceButton(entrance, on_click, on_ctrl_click, on_enter, on_leave, link, text)

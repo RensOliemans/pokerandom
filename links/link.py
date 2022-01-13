@@ -24,10 +24,10 @@ class Link:
     def has_note(self):
         return self.note is not None
 
-    def other(self, key):
-        if key not in self:
-            logging.error('Key %s was not found in link %s', key, self)
-        if key == self.entrance:
+    def other(self, entrance):
+        if entrance not in self:
+            logging.error('Key %s was not found in link %s', entrance, self)
+        if entrance == self.entrance:
             return self.destination
         return self.entrance
 

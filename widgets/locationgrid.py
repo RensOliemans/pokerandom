@@ -10,7 +10,7 @@ class LocationGrid(QGroupBox):
     def __init__(self, elements, on_click, on_enter, on_leave, get_parent, max_rows):
         super().__init__()
 
-        self.elements = elements
+        self.categories = elements
         self.on_click = on_click
         self.on_enter = on_enter
         self.on_leave = on_leave
@@ -31,18 +31,17 @@ class LocationGrid(QGroupBox):
 
     def set_buttons(self):
         self._clear_colors()
-        locations = [self.get_parent(link.entrance)
-                     if self.get_parent(link.destination) == self.location else self.get_parent(link.destination)
-                     for link in self.links]
+        categories = self._get_linked_categories()
+        categories = [category.key for category in categories if category]
         for widget in self.widgets:
-            if widget.key in locations:
+            if widget.key in categories:
                 widget.widget.setPalette(colors.existing_link)
 
-    def show_destination(self, key):
-        if key is None:
+    def show_destination(self, category):
+        if category is None:
             return
 
-        widgets_to_change = [w for w in self.widgets if w.key == key]
+        widgets_to_change = [w for w in self.widgets if w.key == category.key]
         for widget in widgets_to_change:
             widget.widget.setPalette(colors.linked)
 
@@ -63,9 +62,15 @@ class LocationGrid(QGroupBox):
             widget.widget.setPalette(colors.default)
 
     def _create_widgets(self):
-        for category in self.elements.keys():
-            for location_key, location_name in self.elements[category]:
-                yield Widget(location_key,
-                             create_button(location_key, location_name, self.on_click,
-                                           on_enter=self.on_enter, on_leave=self.on_leave))
+        for category in self.categories:
+            yield Widget(category.key,
+                         create_button(category, self.on_click,
+                                       on_enter=self.on_enter, on_leave=self.on_leave))
 
+    def _get_linked_categories(self):
+        for link in self.links:
+            dest_parent = self.get_parent(link.destination)
+            if dest_parent and dest_parent.key == self.location:
+                yield self.get_parent(link.entrance)
+            else:
+                yield self.get_parent(link.destination)

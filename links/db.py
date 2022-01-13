@@ -13,11 +13,11 @@ class Db:
         self._cursor.execute("INSERT INTO link VALUES (?, ?, ?, ?, ?)",
                              (link.entrance, link.destination, link.one_way, block, link.note))
 
-    def get(self, locations=None):
-        if locations is None:
+    def get(self, entrances=None):
+        if entrances is None:
             self._cursor.execute("SELECT * FROM link")
         else:
-            args = [locations[0] for locations in locations]
+            args = [entrance.key for entrance in entrances]
             self._cursor.execute('SELECT * FROM link WHERE entrance IN ({seq}) OR destination IN ({seq})'
                                  .format(seq=','.join(['?']*len(args))),
                                  args*2)

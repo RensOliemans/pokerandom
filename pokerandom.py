@@ -5,22 +5,24 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QGridLayout
 import widgets
 from links.link import Link
 from links.linkmanager import LinkManager
+from util.locations import get_entrances_of_category, get_name_of_key, get_category_of_entrance, \
+    get_location_of_entrance, get_entrances_of_location
 
 
 class PokeRandom(QWidget):
-    def __init__(self, locations, initial_location, entrances, db):
+    def __init__(self, categories, initial_location, db):
         super().__init__()
         self.setWindowTitle("Pokémon Platinum Randomizer Tracker")
 
-        self.link_manager = LinkManager(locations, entrances, db)
-        self.current_location = initial_location[0]
-        self.entrances = entrances
+        self.link_manager = LinkManager(categories, db)
+        self.current_location = initial_location
+        self.entrances = categories
 
         self._highlighting_entrances = []
 
         self.locations = widgets.LocationGrid(
-            locations, on_click=self.set_current_location, on_enter=self.show_connections,
-            on_leave=self.hide_connections, get_parent=self.get_location_of_entrance, max_rows=15
+            categories, on_click=self.set_current_location, on_enter=self.show_connections,
+            on_leave=self.hide_connections, get_parent=self.get_category_of_entrance, max_rows=15
         )
         self.connections = widgets.ConnectionGrid(
             self.entrances, on_click=self.select_connection, on_ctrl_click=self._change_location_by_entrance,
@@ -51,12 +53,12 @@ class PokeRandom(QWidget):
         super(PokeRandom, self).setVisible(visible)
 
     def set_current_location(self, location):
-        self.current_location = location
-        self.image.set_image(location)
+        self.current_location = location.key
+        self.image.set_image(self.current_location)
         self.redraw_location()
 
     def redraw_location(self):
-        links = self.link_manager.get_links(self.entrances[self.current_location])
+        links = self.link_manager.get_links(self.get_entrances_of_category())
         self.locations.change_location(self.current_location, links)
         self.connections.set_buttons(self.current_location, links)
 
@@ -67,37 +69,39 @@ class PokeRandom(QWidget):
         self.link_manager.add_link(Link(entrance, destination, one_way, block, note))
         self.redraw_location()
 
-    def get_location_of_entrance(self, key):
-        for category, entrances in self.entrances.items():
-            if key in [entrance[0] for entrance in entrances]:
-                return category
-
     def get_name_of_location(self, key):
-        all_entrances = [self.entrances[x] for x in self.entrances.keys()]
-        flattened = [i for sub in all_entrances for i in sub]
-        try:
-            return [x[1] for x in flattened if key == x[0]][0]
-        except IndexError:
-            logging.error('Could not find key %s, when I really expected it.', key)
+        return get_name_of_key(self.entrances, key)
 
-    def show_connection(self, key):
-        destination = self._get_destination(key)
+    def get_location_of_entrance(self, key):
+        return get_location_of_entrance(self.entrances, key)
 
-        self.locations.show_destination(self.get_location_of_entrance(destination))
+    def get_category_of_entrance(self, key):
+        return get_category_of_entrance(self.entrances, key)
+
+    def show_connection(self, entrance):
+        destination = self._get_destination(entrance.key)
+
+        self.locations.show_destination(self.get_category_of_entrance(destination))
         self.connections.show_destination(destination)
 
-    def hide_connection(self, key):
-        destination = self._get_destination(key)
+    def hide_connection(self, entrance):
+        destination = self._get_destination(entrance.key)
 
         self.locations.set_buttons()
         self.connections.hide_destination(destination)
 
-    def show_connections(self, key):
-        self._highlighting_entrances = self.link_manager.get_links(self.entrances[key])
+    def show_connections(self, category):
+        key = category.key
+        self._highlighting_entrances = self.link_manager.get_links(self.get_entrances_of_category(key))
         for link in self._highlighting_entrances:
-            if self.get_location_of_entrance(link.entrance) == key:
+            if self.get_category_of_entrance(link.entrance).key == key:
                 self.connections.show_destination(link.destination)
-            if self.get_location_of_entrance(link.destination) == key:
+
+            destination = self.get_category_of_entrance(link.destination)
+            if destination is None:
+                return
+
+            if destination.key == key:
                 self.connections.show_destination(link.entrance)
 
     def hide_connections(self, key):
@@ -125,21 +129,30 @@ class PokeRandom(QWidget):
         if destination is None:
             return
 
+        category = self.get_category_of_entrance(destination)
         location = self.get_location_of_entrance(destination)
-        destinations_of_destination = self.link_manager.get_links(self.entrances[location])
+        destinations_of_destination = self.link_manager.get_links(self.get_entrances_of_location(location.key))
         for link in destinations_of_destination:
             loc = link.destination if self.get_location_of_entrance(link.entrance) == location else link.entrance
 
-            self.locations.show_second_destination(self.get_location_of_entrance(loc))
+            self.locations.show_second_destination(self.get_category_of_entrance(loc))
 
     def _change_location_by_entrance(self, key):
-        location = self.get_location_of_entrance(key)
+        location = self.get_category_of_entrance(key)
         if location:
             self.set_current_location(location)
 
     def _get_destination(self, key):
         link = self.link_manager.get_link(key)
         return link.other(key) if link is not None else None
+
+    def get_entrances_of_category(self, key=None):
+        if key is None:
+            key = self.current_location
+        return get_entrances_of_category(self.entrances, key)
+
+    def get_entrances_of_location(self, key):
+        return get_entrances_of_location(self.entrances, key)
 
     def show_help(self):
         self.help.show()

@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication
 
 from util.button import create_button, EntranceButton
 from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
+from util.locations import get_entrances_of_category
 from util.widget import Widget
 
 
@@ -65,28 +66,29 @@ class ConnectionGrid(QGroupBox):
             self.buttons.addWidget(widget.widget, row, column)
 
     def _create_widgets(self, location, links):
-        elements = self.elements[location]
-        for key, name in elements:
-            link = get_link_of_button(key, links)
-            name = self._create_name(key, name, link)
-            yield Widget(key, create_button(key, name, self.on_click, on_ctrl_click=self.on_ctrl_click,
-                                            on_enter=self.on_enter, on_leave=self.on_leave, link=link,
-                                            get_location_name=self.get_location_name))
+        entrances = get_entrances_of_category(self.elements, location)
+        for entrance in entrances:
+            link = get_link_of_button(entrance.key, links)
+            name = self._create_name(entrance, link)
+            yield Widget(entrance.key,
+                         create_button(entrance, self.on_click, on_ctrl_click=self.on_ctrl_click,
+                                       on_enter=self.on_enter, on_leave=self.on_leave, link=link,
+                                       text=name))
 
-    def _create_name(self, key, name, link):
+    def _create_name(self, entrance, link):
         if not link or link.blocked:
-            return name
+            return entrance.name
 
         if link.has_note:
-            return f'{name} — {link.note}'
+            return f'{entrance.name} — {link.note}'
 
-        return f'{name} -> {self.get_location_name(link.other(key))}'
+        return f'{entrance.name} -> {self.get_location_name(link.other(entrance.key))}'
 
     def show_double_connections(self):
         w = QApplication.widgetAt(QCursor.pos(self.screen()))
         if type(w) is EntranceButton:
-            if not self.double_information == w.key:
-                self.double_information = w.key
+            if not self.double_information == w.entrance.key:
+                self.double_information = w.entrance.key
                 self.show_double(self.double_information)
         else:
             self.double_information = None

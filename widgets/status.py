@@ -23,13 +23,13 @@ class Status(QGroupBox):
         self.layout.addWidget(self.one_way_widget, 1, 0)
         self.layout.addWidget(self.note, 0, 1)
 
-    def select_item(self, key):
+    def select_item(self, entrance):
         if self.entrance is None:
-            self.entrance = key
-        elif self.entrance == key:
+            self.entrance = entrance
+        elif self.entrance == entrance:
             return
         else:
-            self.save(destination=key, one_way=self.one_way)
+            self.save(destination=entrance, one_way=self.one_way)
 
     def cancel(self):
         self.entrance = None
@@ -56,7 +56,8 @@ class Status(QGroupBox):
         self.note.clear()
 
     def save(self, *, destination=None, one_way=False, block=None, note=None):
-        self.add_link_callback(self.entrance, destination, one_way=one_way, block=block, note=note)
+        destination = destination.key if destination else None
+        self.add_link_callback(self.entrance.key, destination, one_way=one_way, block=block, note=note)
         self.cancel()
 
     @property
@@ -81,5 +82,5 @@ class Status(QGroupBox):
         if value is None:
             self.entrance_widget.setText('Select a location')
         else:
-            self.entrance_widget.setText(f"Selected '{self.get_name_of_location(value)}'")
+            self.entrance_widget.setText(f"Selected '{value.name}'")
         self.selected_callback(value, selected=value is not None)
