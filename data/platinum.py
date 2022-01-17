@@ -45,7 +45,7 @@ CATEGORIES = [
         Location('uxie', 'Uxie',
                  [Entrance('uxie', 'Uxie')]),
     ]),
-    Category('pokecenters_1', 'Pokécenters 1', [
+    Category('sandgem_jubilife', 'Sandgem/Jubilife', [
         Location('sandgem_pc', 'Sandgem PC', [
             Entrance('sandgem_pc_w', 'Sandgem PC W'),
             Entrance('sandgem_pc_s', 'Sandgem PC S'),
@@ -56,91 +56,6 @@ CATEGORIES = [
             Entrance('jubilife_pc_s', 'Jubilife PC S'),
             Entrance('jubilife_pc_e', 'Jubilife PC E'),
         ]),
-        Location('oreburgh_pc', 'Oreburgh PC', [
-            Entrance('oreburgh_pc_w', 'Oreburgh PC W'),
-            Entrance('oreburgh_pc_s', 'Oreburgh PC S'),
-            Entrance('oreburgh_pc_e', 'Oreburgh PC E'),
-        ]),
-        Location('floaroma_pc', 'Floaroma PC', [
-            Entrance('floaroma_pc_w', 'Floaroma PC W'),
-            Entrance('floaroma_pc_s', 'Floaroma PC S'),
-            Entrance('floaroma_pc_e', 'Floaroma PC E'),
-        ]),
-        Location('eterna_pc', 'Eterna PC', [
-            Entrance('eterna_pc_w', 'Eterna PC W'),
-            Entrance('eterna_pc_s', 'Eterna PC S'),
-            Entrance('eterna_pc_e', 'Eterna PC E'),
-        ]),
-        Location('hearthome_pc', 'Hearthome PC', [
-            Entrance('hearthome_pc_w', 'Hearthome PC W'),
-            Entrance('hearthome_pc_s', 'Hearthome PC S'),
-            Entrance('hearthome_pc_e', 'Hearthome PC E'),
-        ]),
-        Location('solaceon_pc', 'Solaceon PC', [
-            Entrance('solaceon_pc_w', 'Solaceon PC W'),
-            Entrance('solaceon_pc_s', 'Solaceon PC S'),
-            Entrance('solaceon_pc_e', 'Solaceon PC E'),
-        ]),
-        Location('veilstone_pc', 'Veilstone PC', [
-            Entrance('veilstone_pc_w', 'Veilstone PC W'),
-            Entrance('veilstone_pc_s', 'Veilstone PC S'),
-            Entrance('veilstone_pc_e', 'Veilstone PC E'),
-        ]),
-        Location('pastoria_pc', 'Pastoria PC', [
-            Entrance('pastoria_pc_w', 'Pastoria PC W'),
-            Entrance('pastoria_pc_s', 'Pastoria PC S'),
-            Entrance('pastoria_pc_e', 'Pastoria PC E'),
-        ]),
-    ]),
-    Category('pokecenters_2', 'Pokécenters 2', [
-        Location('celestic_pc', 'Celestic PC', [
-            Entrance('celestic_pc_w', 'Celestic PC W'),
-            Entrance('celestic_pc_s', 'Celestic PC S'),
-            Entrance('celestic_pc_e', 'Celestic PC E'),
-        ]),
-        Location('canalave_pc', 'Canalave PC', [
-            Entrance('canalave_pc_w', 'Canalave PC W'),
-            Entrance('canalave_pc_s', 'Canalave PC S'),
-            Entrance('canalave_pc_e', 'Canalave PC E'),
-        ]),
-        Location('snowpoint_pc', 'Snowpoint PC', [
-            Entrance('snowpoint_pc_w', 'Snowpoint PC W'),
-            Entrance('snowpoint_pc_s', 'Snowpoint PC S'),
-            Entrance('snowpoint_pc_e', 'Snowpoint PC E'),
-        ]),
-        Location('sunyshore_pc', 'Sunyshore PC', [
-            Entrance('sunyshore_pc_w', 'Sunyshore PC W'),
-            Entrance('sunyshore_pc_s', 'Sunyshore PC S'),
-            Entrance('sunyshore_pc_e', 'Sunyshore PC E'),
-        ]),
-        Location('victory_road_pc', 'VR PC', [
-            Entrance('victory_road_pc_w', 'VR PC W'),
-            Entrance('victory_road_pc_s', 'VR PC S'),
-            Entrance('victory_road_pc_e', 'VR PC E'),
-        ]),
-        Location('pokemon_league_pc', 'League PC', [
-            Entrance('pokemon_league_up', 'League PC Up'),
-            Entrance('pokemon_league_down', 'League PC Down'),
-            Entrance('pokemon_league_n', 'League PC N'),
-            Entrance('pokemon_league_s', 'League PC S'),
-        ]),
-        Location('fight_area_pc', 'Fight Area PC', [
-            Entrance('fight_area_pc_w', 'Fight Area PC W'),
-            Entrance('fight_area_pc_s', 'Fight Area PC S'),
-            Entrance('fight_area_pc_e', 'Fight Area PC E'),
-        ]),
-        Location('survival_area_pc', 'Survival Area PC', [
-            Entrance('survival_area_pc_w', 'Survival Area PC W'),
-            Entrance('survival_area_pc_s', 'Survival Area PC S'),
-            Entrance('survival_area_pc_e', 'Survival Area PC E'),
-        ]),
-        Location('resort_area_pc', 'Resort Area PC', [
-            Entrance('resort_area_pc_w', 'Resort Area PC W'),
-            Entrance('resort_area_pc_s', 'Resort Area PC S'),
-            Entrance('resort_area_pc_e', 'Resort Area PC E'),
-        ]),
-    ]),
-    Category('sandgem_jubilife', 'Sandgem/Jubilife', [
         Location('sandgem_jubilife', 'Sandgem/Jubilife', [
             Entrance('verity_lakefront', 'Verity Lakefront'),
             Entrance('sandgem_pokecenter', 'Sandgem Pokécenter'),
@@ -162,6 +77,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('oreburgh', 'Oreburgh', [
+        Location('oreburgh_pc', 'Oreburgh PC', [
+            Entrance('oreburgh_pc_w', 'Oreburgh PC W'),
+            Entrance('oreburgh_pc_s', 'Oreburgh PC S'),
+            Entrance('oreburgh_pc_e', 'Oreburgh PC E'),
+        ]),
         Location('oreburgh', 'Oreburgh', [
             Entrance('oreburgh_pokecenter', 'Oreburgh Pokécenter'),
             Entrance('oreburgh_mart', 'Oreburgh Mart'),
@@ -182,6 +102,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('floaroma', 'Floaroma', [
+        Location('floaroma_pc', 'Floaroma PC', [
+            Entrance('floaroma_pc_w', 'Floaroma PC W'),
+            Entrance('floaroma_pc_s', 'Floaroma PC S'),
+            Entrance('floaroma_pc_e', 'Floaroma PC E'),
+        ]),
         Location('floaroma', 'Floaroma', [
             Entrance('floaroma_pokecenter', 'Floaroma Pokecenter'),
             Entrance('floaroma_mart', 'Floaroma Mart'),
@@ -203,6 +128,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('eterna', 'Eterna', [
+        Location('eterna_pc', 'Eterna PC', [
+            Entrance('eterna_pc_w', 'Eterna PC W'),
+            Entrance('eterna_pc_s', 'Eterna PC S'),
+            Entrance('eterna_pc_e', 'Eterna PC E'),
+        ]),
         Location('eterna', 'Eterna', [
             Entrance('eterna_pokecenter', 'Eterna Pokecenter'),
             Entrance('eterna_mart', 'Eterna Mart'),
@@ -220,6 +150,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('hearthome', 'Hearthome', [
+        Location('hearthome_pc', 'Hearthome PC', [
+            Entrance('hearthome_pc_w', 'Hearthome PC W'),
+            Entrance('hearthome_pc_s', 'Hearthome PC S'),
+            Entrance('hearthome_pc_e', 'Hearthome PC E'),
+        ]),
         Location('hearthome', 'Hearthome', [
             Entrance('hearthome_pokecenter', 'Hearthome Pokecenter'),
             Entrance('hearthome_mart', 'Hearthome Mart'),
@@ -239,6 +174,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('solaceon', 'Solaceon', [
+        Location('solaceon_pc', 'Solaceon PC', [
+            Entrance('solaceon_pc_w', 'Solaceon PC W'),
+            Entrance('solaceon_pc_s', 'Solaceon PC S'),
+            Entrance('solaceon_pc_e', 'Solaceon PC E'),
+        ]),
         Location('solaceon', 'Solaceon', [
             Entrance('solaceon_pokecenter', 'Solaceon Pokecenter'),
             Entrance('solaceon_mart', 'Solaceon Mart'),
@@ -255,6 +195,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('veilstone', 'Veilstone', [
+        Location('veilstone_pc', 'Veilstone PC', [
+            Entrance('veilstone_pc_w', 'Veilstone PC W'),
+            Entrance('veilstone_pc_s', 'Veilstone PC S'),
+            Entrance('veilstone_pc_e', 'Veilstone PC E'),
+        ]),
         Location('veilstone', 'Veilstone', [
             Entrance('veilstone_pokecenter', 'Veilstone Pokecenter'),
             Entrance('veilstone_mart', 'Veilstone Mart'),
@@ -274,6 +219,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('pastoria', 'Pastoria', [
+        Location('pastoria_pc', 'Pastoria PC', [
+            Entrance('pastoria_pc_w', 'Pastoria PC W'),
+            Entrance('pastoria_pc_s', 'Pastoria PC S'),
+            Entrance('pastoria_pc_e', 'Pastoria PC E'),
+        ]),
         Location('pastoria', 'Pastoria', [
             Entrance('pastoria_pokecenter', 'Pastoria Pokecenter'),
             Entrance('pastoria_mart', 'Pastoria Mart'),
@@ -290,6 +240,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('celestic', 'Celestic', [
+        Location('celestic_pc', 'Celestic PC', [
+            Entrance('celestic_pc_w', 'Celestic PC W'),
+            Entrance('celestic_pc_s', 'Celestic PC S'),
+            Entrance('celestic_pc_e', 'Celestic PC E'),
+        ]),
         Location('celestic', 'Celestic', [
             Entrance('celestic_pokecenter', 'Celestic Pokecenter'),
             Entrance('celestic_ruins', 'Celestic Ruins'),
@@ -302,6 +257,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('canalave', 'Canalave', [
+        Location('canalave_pc', 'Canalave PC', [
+            Entrance('canalave_pc_w', 'Canalave PC W'),
+            Entrance('canalave_pc_s', 'Canalave PC S'),
+            Entrance('canalave_pc_e', 'Canalave PC E'),
+        ]),
         Location('canalave', 'Canalave', [
             Entrance('canalave_pokecenter', 'Canalave Pokecenter'),
             Entrance('canalave_mart', 'Canalave Mart'),
@@ -316,6 +276,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('snowpoint', 'Snowpoint', [
+        Location('snowpoint_pc', 'Snowpoint PC', [
+            Entrance('snowpoint_pc_w', 'Snowpoint PC W'),
+            Entrance('snowpoint_pc_s', 'Snowpoint PC S'),
+            Entrance('snowpoint_pc_e', 'Snowpoint PC E'),
+        ]),
         Location('snowpoint', 'Snowpoint', [
             Entrance('snowpoint_pokecenter', 'Snowpoint Pokecenter'),
             Entrance('snowpoint_mart', 'Snowpoint Mart'),
@@ -331,6 +296,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('sunyshore', 'Sunyshore', [
+        Location('sunyshore_pc', 'Sunyshore PC', [
+            Entrance('sunyshore_pc_w', 'Sunyshore PC W'),
+            Entrance('sunyshore_pc_s', 'Sunyshore PC S'),
+            Entrance('sunyshore_pc_e', 'Sunyshore PC E'),
+        ]),
         Location('sunyshore', 'Sunyshore', [
             Entrance('sunyshore_pokecenter', 'Sunyshore Pokecenter'),
             Entrance('sunyshore_mart', 'Sunyshore Mart'),
@@ -345,6 +315,16 @@ CATEGORIES = [
         ]),
     ]),
     Category('fight_resort', 'Fight/Resort', [
+        Location('fight_area_pc', 'Fight Area PC', [
+            Entrance('fight_area_pc_w', 'Fight Area PC W'),
+            Entrance('fight_area_pc_s', 'Fight Area PC S'),
+            Entrance('fight_area_pc_e', 'Fight Area PC E'),
+        ]),
+        Location('resort_area_pc', 'Resort Area PC', [
+            Entrance('resort_area_pc_w', 'Resort Area PC W'),
+            Entrance('resort_area_pc_s', 'Resort Area PC S'),
+            Entrance('resort_area_pc_e', 'Resort Area PC E'),
+        ]),
         Location('fight_area', 'Fight Area', [
             Entrance('fight_area_pokecenter', 'Fight Area Pokecenter'),
             Entrance('fight_area_mart', 'Fight Area Mart'),
@@ -364,6 +344,11 @@ CATEGORIES = [
         ]),
     ]),
     Category('survival', 'Survival', [
+        Location('survival_area_pc', 'Survival Area PC', [
+            Entrance('survival_area_pc_w', 'Survival Area PC W'),
+            Entrance('survival_area_pc_s', 'Survival Area PC S'),
+            Entrance('survival_area_pc_e', 'Survival Area PC E'),
+        ]),
         Location('survival', 'Survival', [
             Entrance('survival_area_pokecenter', 'Survival Area Pokecenter'),
             Entrance('survival_area_mart', 'Survival Area Mart'),
@@ -603,19 +588,29 @@ CATEGORIES = [
             Entrance('mt_coronet_summit_e_cave', 'Coronet Summit E Cave'),
             Entrance('mt_coronet_summit_se_cave', 'Coronet Summit SE Cave'),
             Entrance('mt_coronet_summit_w_cave', 'Coronet Summit W Cave'),
-            Entrance('mt_coronet_summit_nw_cave', 'Coronet Summit NW Cave'),
+            Entrance('mt_coronet_summit_sw_cave', 'Coronet Summit SW Cave'),
         ]),
     ]),
     Category('victory_road', 'Victory Road', [
+        Location('victory_road_pc', 'VR PC', [
+            Entrance('victory_road_pc_w', 'VR PC W'),
+            Entrance('victory_road_pc_s', 'VR PC S'),
+            Entrance('victory_road_pc_e', 'VR PC E'),
+        ]),
+        Location('pokemon_league_pc', 'League PC', [
+            Entrance('pokemon_league_up', 'League PC Up'),
+            Entrance('pokemon_league_down', 'League PC Down'),
+            Entrance('pokemon_league_n', 'League PC N'),
+            Entrance('pokemon_league_s', 'League PC S'),
+        ]),
         Location('victory_road_1f', 'Victory Road 1F', [
             Entrance('victory_road_1f_nw_stairs', 'VR 1F NW Stairs'),
             Entrance('victory_road_1f_w_stairs', 'VR 1F W Stairs'),
             Entrance('victory_road_1f_sw_stairs', 'VR 1F SW Stairs'),
             Entrance('victory_road_1f_ne_stairs', 'VR 1F NE Stairs'),
             Entrance('victory_road_1f_e_stairs', 'VR 1F E Stairs'),
-            Entrance('victory_road_1f_se_stairs', 'VR 1F SE Stairs'),
             Entrance('victory_road_1f_north_exit', 'VR 1F North Exit'),
-            Entrance('victory_road_1f_east_exit', 'VR 1F East Exit'),
+            Entrance('victory_road_1f_east_cave', 'VR 1F East Cave'),
             Entrance('victory_road_1f_south_exit', 'VR 1F South Exit'),
         ]),
         Location('victory_road_b1f', 'Victory Road B1F', [

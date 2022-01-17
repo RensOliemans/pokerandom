@@ -22,7 +22,7 @@ class PokeRandom(QWidget):
 
         self.locations = widgets.LocationGrid(
             categories, on_click=self.set_current_location, on_enter=self.show_connections,
-            on_leave=self.hide_connections, get_parent=self.get_category_of_entrance, max_rows=15
+            on_leave=self.hide_connections, get_parent=self.get_category_of_entrance, max_rows=12
         )
         self.connections = widgets.ConnectionGrid(
             self.entrances, on_click=self.select_connection, on_ctrl_click=self._change_location_by_entrance,

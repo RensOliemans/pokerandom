@@ -9,6 +9,9 @@ class Category:
         self.name = name
         self.locations = locations
 
+    def __repr__(self):
+        return f'<Category key={self.key} name={self.name}>'
+
 
 class Location:
     """
@@ -25,6 +28,9 @@ class Location:
         return (isinstance(other, Location)
                 and self.key == other.key and self.name == other.name)
 
+    def __repr__(self):
+        return f'<Location key={self.key} name={self.name}>'
+
 
 class Entrance:
     def __init__(self, key, name):
@@ -37,6 +43,9 @@ class Entrance:
 
     def __hash__(self):
         return hash((self.key, self.name))
+
+    def __repr__(self):
+        return f'<Entrance key={self.key} name={self.name}>'
 
 
 def get_entrances_of_category(categories, key):
