@@ -2,9 +2,8 @@ from PySide6.QtGui import QCursor
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QApplication
 
 from util.button import create_button, EntranceButton
-from util.gridutils import compute_cols, divide_widgets_per_column, create_grid
-from util.locations import get_entrances_of_category
-from util.widget import Widget
+from util.gridutils import create_grid
+from util.locations import get_entrances_of_category, Entrance
 
 
 class ConnectionGrid(QGroupBox):
@@ -23,7 +22,7 @@ class ConnectionGrid(QGroupBox):
         self.selected = None
         self.double_information = None
 
-        self.widgets: [Widget] = []
+        self.widgets: {Entrance: EntranceButton} = dict()
         self.buttons = QGridLayout(self)
 
     def set_buttons(self, key, links):
@@ -31,49 +30,46 @@ class ConnectionGrid(QGroupBox):
         self._add_buttons(key, links)
 
     def show_destination(self, key):
-        for widget in self.widgets:
-            if widget.key == key:
-                widget.widget.draw(active=True)
+        if key is not None and key in self.widgets:
+            self.widgets[key].draw(active=True)
 
     def hide_destination(self, key):
-        for widget in self.widgets:
-            if widget.key == key:
-                widget.widget.draw()
+        if key is not None and key in self.widgets:
+            self.widgets[key].draw()
 
-    def show_selected(self, key, selected):
-        if not selected and self.selected is not None:
-            self.selected.widget.draw()
-        for widget in self.widgets:
-            if widget.key == key:
-                self.selected = widget
-                widget.widget.draw(selected=True)
+    def show_selected(self, entrance, selected):
+        if not selected:
+            self._hide_previously_selected()
+
+        if entrance is not None and entrance.key in self.widgets:
+            widget = self.widgets[entrance.key]
+            self.selected = widget
+            widget.draw(selected=True)
+
+    def _hide_previously_selected(self):
+        if self.selected is not None:
+            self.selected.draw(selected=False)
 
     def _remove_buttons(self):
-        while self.widgets:
-            widget = self.widgets.pop().widget
+        for widget in self.widgets.values():
             self.buttons.removeWidget(widget)
             widget.deleteLater()
+        self.widgets = dict()
         self.selected = None
 
     def _add_buttons(self, location, links):
-        widgets = list(self._create_widgets(location, links))
-        columns = compute_cols(len(widgets), self.max_rows)
-
-        division = divide_widgets_per_column(len(widgets), columns)
-        grid = create_grid(widgets, list(division))
+        self._create_widgets(location, links)
+        grid = create_grid(self.widgets, self.max_rows)
         for widget, (row, column) in grid:
-            self.widgets.append(widget)
-            self.buttons.addWidget(widget.widget, row, column)
+            self.buttons.addWidget(widget, row, column)
 
     def _create_widgets(self, location, links):
         entrances = get_entrances_of_category(self.elements, location)
         for entrance in entrances:
             link = get_link_of_button(entrance.key, links)
             name = self._create_name(entrance, link)
-            yield Widget(entrance.key,
-                         create_button(entrance, self.on_click, on_ctrl_click=self.on_ctrl_click,
-                                       on_enter=self.on_enter, on_leave=self.on_leave, link=link,
-                                       text=name))
+            self.widgets[entrance.key] = create_button(entrance, self.on_click, on_ctrl_click=self.on_ctrl_click,
+                                                       on_enter=self.on_enter, on_leave=self.on_leave, link=link, text=name)
 
     def _create_name(self, entrance, link):
         if not link or link.blocked:

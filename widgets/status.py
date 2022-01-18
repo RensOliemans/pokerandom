@@ -3,9 +3,8 @@ from PySide6.QtWidgets import QLabel, QGroupBox, QGridLayout, QVBoxLayout, QText
 from widgets import Note
 
 
-class Status(QGroupBox):
+class Status:
     def __init__(self, selected_callback, add_link_callback, get_name_of_location):
-        super().__init__('Current Edit')
 
         self._entrance = None
         self._one_way = False
@@ -13,15 +12,8 @@ class Status(QGroupBox):
         self.add_link_callback = add_link_callback
         self.get_name_of_location = get_name_of_location
 
-        self.entrance_widget = QLabel('Select a location')
-        self.note = Note(self, self.save_note)
-        self.one_way_widget = QLabel('')
-
-        self.layout = QGridLayout(self)
-
-        self.layout.addWidget(self.entrance_widget, 0, 0)
-        self.layout.addWidget(self.one_way_widget, 1, 0)
-        self.layout.addWidget(self.note, 0, 1)
+        self.note = Note(self.save_note)
+        self.widget = StatusWidget(self.note)
 
     def select_item(self, entrance):
         if self.entrance is None:
@@ -67,10 +59,7 @@ class Status(QGroupBox):
     @one_way.setter
     def one_way(self, value):
         self._one_way = value
-        if value:
-            self.one_way_widget.setText('One-way enabled')
-        else:
-            self.one_way_widget.setText('')
+        self.widget.change_oneway(value)
 
     @property
     def entrance(self):
@@ -79,8 +68,29 @@ class Status(QGroupBox):
     @entrance.setter
     def entrance(self, value):
         self._entrance = value
-        if value is None:
-            self.entrance_widget.setText('Select a location')
-        else:
-            self.entrance_widget.setText(f"Selected '{value.name}'")
+        self.widget.change_entrance(value)
         self.selected_callback(value, selected=value is not None)
+
+
+class StatusWidget(QGroupBox):
+    def __init__(self, note):
+        super().__init__('Current Edit')
+
+        self.entrance_widget = QLabel()
+        self.one_way_widget = QLabel()
+
+        self.change_entrance()
+
+        self.layout = QGridLayout(self)
+
+        self.layout.addWidget(self.entrance_widget, 0, 0)
+        self.layout.addWidget(self.one_way_widget, 1, 0)
+        self.layout.addWidget(note, 0, 1)
+
+    def change_entrance(self, value=None):
+        text = f"Selected '{value.name}'" if value else 'Select a location'
+        self.entrance_widget.setText(text)
+
+    def change_oneway(self, text=None):
+        text = f'One-way enabled' if text else ''
+        self.one_way_widget.setText(text)

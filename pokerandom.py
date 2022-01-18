@@ -26,7 +26,7 @@ class PokeRandom(QWidget):
         )
         self.connections = widgets.ConnectionGrid(
             self.entrances, on_click=self.select_connection, on_ctrl_click=self._change_location_by_entrance,
-            on_enter=self.show_connection, on_leave=self.hide_connection, get_location_name=self.get_name_of_location,
+            on_enter=self.show_destination, on_leave=self.hide_destination, get_location_name=self.get_name_of_location,
             view_double=self.show_double, max_rows=10
         )
         self.status = widgets.Status(self.selected, self.add_link, self.get_name_of_location)
@@ -46,7 +46,7 @@ class PokeRandom(QWidget):
         main_layout = QGridLayout(self)
         main_layout.addWidget(self.small_help, 0, 0)
         main_layout.addLayout(self.left, 1, 0)
-        main_layout.addWidget(self.status, 0, 1)
+        main_layout.addWidget(self.status.widget, 0, 1)
         main_layout.addWidget(self.image, 1, 1)
 
     def setVisible(self, visible):
@@ -55,36 +55,27 @@ class PokeRandom(QWidget):
     def set_current_location(self, location):
         self.current_location = location.key
         self.image.set_image(self.current_location)
-        self.redraw_location()
+        self._redraw_location()
 
-    def redraw_location(self):
-        links = self.link_manager.get_links(self.get_entrances_of_category())
-        self.locations.change_location(self.current_location, links)
-        self.connections.set_buttons(self.current_location, links)
+    def add_link(self, entrance, destination, one_way=False, block=None, note=None):
+        self.link_manager.add_link(Link(entrance, destination, one_way, block, note))
+        self._redraw_location()
 
     def select_connection(self, location):
         self.status.select_item(location)
 
-    def add_link(self, entrance, destination, one_way=False, block=None, note=None):
-        self.link_manager.add_link(Link(entrance, destination, one_way, block, note))
-        self.redraw_location()
+    def _redraw_location(self):
+        links = self.link_manager.get_links(self.get_entrances_of_category())
+        self.locations.change_location(self.current_location, links)
+        self.connections.set_buttons(self.current_location, links)
 
-    def get_name_of_location(self, key):
-        return get_name_of_key(self.entrances, key)
-
-    def get_location_of_entrance(self, key):
-        return get_location_of_entrance(self.entrances, key)
-
-    def get_category_of_entrance(self, key):
-        return get_category_of_entrance(self.entrances, key)
-
-    def show_connection(self, entrance):
+    def show_destination(self, entrance):
         destination = self._get_destination(entrance.key)
 
         self.locations.show_destination(self.get_category_of_entrance(destination))
         self.connections.show_destination(destination)
 
-    def hide_connection(self, entrance):
+    def hide_destination(self, entrance):
         destination = self._get_destination(entrance.key)
 
         self.locations.set_buttons()
@@ -104,8 +95,8 @@ class PokeRandom(QWidget):
 
     def hide_connections(self, key):
         for link in self._highlighting_entrances:
-            self.connections.hide_destination(link.destination)
             self.connections.hide_destination(link.entrance)
+            self.connections.hide_destination(link.destination)
 
     def selected(self, key, selected):
         self.connections.show_selected(key, selected)
@@ -133,6 +124,15 @@ class PokeRandom(QWidget):
             loc = link.destination if self.get_location_of_entrance(link.entrance) == location else link.entrance
 
             self.locations.show_destination(self.get_category_of_entrance(loc))
+
+    def get_name_of_location(self, key):
+        return get_name_of_key(self.entrances, key)
+
+    def get_location_of_entrance(self, key):
+        return get_location_of_entrance(self.entrances, key)
+
+    def get_category_of_entrance(self, key):
+        return get_category_of_entrance(self.entrances, key)
 
     def _change_location_by_entrance(self, key):
         location = self.get_category_of_entrance(key)
