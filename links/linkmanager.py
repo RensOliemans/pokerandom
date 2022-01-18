@@ -1,3 +1,5 @@
+from typing import List
+
 from links.db import Db
 from links.link import Link
 from util.locations import Category
@@ -34,6 +36,6 @@ class LinkManager:
             raise ValueError(f'{link.destination} not in the known locations.')
 
 
-def flatten_dict(d: [Category]):
+def flatten_dict(d: List[Category]):
     entrances = [loc.entrances for sub in d for loc in sub.locations]
     return {i for sub in entrances for i in sub}
